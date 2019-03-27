@@ -1,17 +1,22 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import injectReducer from 'utils/injectReducer';
+import injectSaga from 'utils/injectSaga';
+import { compose } from 'redux';
 
 import Footer from 'components/Footer/Loadable';
-import SigninPage from 'containers/DashboardPage/Loadable';
+import SigninPage from 'containers/SigninPage/Loadable';
 import DashboardPage from 'containers/DashboardPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import PublicLayoutRoute from 'containers/PublicLayoutRoute';
 import ProtectedLayoutRoute from 'containers/ProtectedLayoutRoute';
 
-export default class App extends React.Component {
+import reducer from 'containers/App/reducer';
+import saga from 'containers/App/saga';
+
+class App extends React.Component {
     constructor(props) {
-        console.log(`### props`, props);
         super(props);
     }
 
@@ -28,3 +33,11 @@ export default class App extends React.Component {
         );
     }
 }
+
+const withReducer = injectReducer({ key: 'app', reducer });
+const withSaga = injectSaga({ key: 'app', saga });
+
+export default compose(
+    withReducer,
+    withSaga,
+)(App);

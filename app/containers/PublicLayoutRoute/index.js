@@ -6,14 +6,15 @@ import Grid from '@material-ui/core/Grid';
 const PublicLayout = ({ children }) => (
     <Grid container direction="row" justify="center" alignItems="center">
         <Grid item>
-            {children}
+            <div style={{ paddingTop: `40px`, textAlign: `center` }}>
+                {children}
+            </div>
         </Grid>
     </Grid>
 );
 
 class PublicLayoutRoute extends React.Component {
     constructor(props) {
-        console.log(`### here`);
         super(props);
     }
 
