@@ -1,4 +1,5 @@
 {
+    "welcomeDescription": "Integrate, manage, visualise, and analyze all your enterprise geospatial data.",
     "components.Footer.author.message": "Made with love by {author}.",
     "components.Footer.license.message": "This project is licensed under the MIT license.",
 
@@ -14,6 +15,10 @@
     "containers.NotFoundPage.notFound": "Page was not found",
     "containers.NotFoundPage.pleaseCheckTheAddressOrContactTheSupport": "Please check the address or contact the support team",
     "containers.NotFoundPage.homePage": "Home page",
+
+    "containers.SigninPage.userName": "User name",
+    "containers.SigninPage.password": "Password",
+    "containers.SigninPage.signIn": "Sign in",
 
     "containers.ProtectedLayoutRoute.checkingAuthorizationStatus": "Checking authorization status"
 }
