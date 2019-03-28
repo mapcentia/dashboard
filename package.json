@@ -79,6 +79,7 @@
         "sanitize.css": "4.1.0",
         "styled-components": "4.0.2",
         "typeface-roboto": "0.0.54",
+        "universal-cookie": "^3.1.0",
         "warning": "4.0.2"
     },
     "devDependencies": {

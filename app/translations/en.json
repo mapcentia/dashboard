@@ -16,9 +16,12 @@
     "containers.NotFoundPage.pleaseCheckTheAddressOrContactTheSupport": "Please check the address or contact the support team",
     "containers.NotFoundPage.homePage": "Home page",
 
-    "containers.SigninPage.userName": "User name",
-    "containers.SigninPage.password": "Password",
-    "containers.SigninPage.signIn": "Sign in",
+    "components.SigninForm.userName": "User name",
+    "components.SigninForm.password": "Password",
+    "components.SigninForm.signIn": "Sign in",
+
+    "containers.SigninPage.invalidCredentialsWereProvided": "Invalid credentials were provided",
+    "containers.SigninPage.register": "Register",
 
     "containers.ProtectedLayoutRoute.checkingAuthorizationStatus": "Checking authorization status"
 }

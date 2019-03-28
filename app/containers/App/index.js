@@ -37,7 +37,4 @@ class App extends React.Component {
 const withReducer = injectReducer({ key: 'app', reducer });
 const withSaga = injectSaga({ key: 'app', saga });
 
-export default compose(
-    withReducer,
-    withSaga,
-)(App);
+export default compose(withReducer, withSaga)(App);
