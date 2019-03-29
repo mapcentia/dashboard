@@ -1,27 +1,41 @@
 {
     "welcomeDescription": "Integrate, manage, visualise, and analyze all your enterprise geospatial data.",
+
     "components.Footer.author.message": "Made with love by {author}.",
     "components.Footer.license.message": "This project is licensed under the MIT license.",
 
     "components.Header.features": "Features",
     "components.Header.home": "Home",
 
-    "containers.HomePage.start_project.header": "Start your next react project in seconds",
-    "containers.HomePage.start_project.message": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
-    "containers.HomePage.tryme.atPrefix": "@",
-    "containers.HomePage.tryme.header": "Try me!",
-    "containers.HomePage.tryme.message": "Show Github repositories by",
 
     "containers.NotFoundPage.notFound": "Page was not found",
     "containers.NotFoundPage.pleaseCheckTheAddressOrContactTheSupport": "Please check the address or contact the support team",
     "containers.NotFoundPage.homePage": "Home page",
 
-    "components.SigninForm.userName": "User name",
-    "components.SigninForm.password": "Password",
-    "components.SigninForm.signIn": "Sign in",
+    "Geocloud Dashboard": "Geocloud Dashboard",
+    "Username": "Username",
+    "Password": "Password",
+    "signIn": "Sign in",
+    "Sign out": "Sign out",
+    "Name": "Name",
+    "Register": "Register",
+    "Email address": "Email address",
+    "Retype password": "Retype password",
+    "I have read the User agreement and Privacy policy": "I have read the User agreement and Privacy policy",
+    "Minimum 8 characters long, at least one capital letter and one digit": "Minimum 8 characters long, at least one capital letter and one digit",
+    "Passwords do not match": "Passwords do not match",
+    "User was created, you can now Sign in": "User was created, you can now Sign in",
+    "Invalid username or password": "Invalid username or password",
+
+    "errors.USER_ALREADY_EXISTS": "User already exists, please choose another name",
+    "errors.EMAIL_ALREADY_EXISTS": "Email already exists, please enter another email or Sign in",
+    "errors.WEAK_PASSWORD": "Entered password is too weak",
 
     "containers.SigninPage.invalidCredentialsWereProvided": "Invalid credentials were provided",
     "containers.SigninPage.register": "Register",
+    "containers.SigninPage.invalidUsernameOrPassword": "Invalid username or password",
+    
+    "containers.SignupPage.signIn": "Sign in",
 
     "checkingAuthorizationStatus": "Checking authorization status"
 }

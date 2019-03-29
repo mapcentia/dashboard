@@ -9,11 +9,22 @@ const makeSelectUser = () => createSelector(selectGlobal, globalState => globalS
 const makeSelectSigningIn = () => createSelector(selectGlobal, globalState => globalState.signingIn);
 const makeSelectSigningInError = () => createSelector(selectGlobal, globalState => globalState.signingInError);
 
+const makeSelectSigningUp = () => createSelector(selectGlobal, globalState => globalState.signingUp);
+const makeSelectSigningUpSuccess = () => createSelector(selectGlobal, globalState => globalState.signingUpSuccess);
+const makeSelectsigningUpSuccessUserName = () => createSelector(selectGlobal, globalState => globalState.signingUpSuccessUserName);
+const makeSelectSigningUpError = () => createSelector(selectGlobal, globalState => globalState.signingUpError);
+const makeSelectSigningUpErrorCode = () => createSelector(selectGlobal, globalState => globalState.signingUpErrorCode);
+
 export {
     selectGlobal,
     makeSelectIsAuthenticating,
     makeSelectIsAuthenticated,
     makeSelectUser,
     makeSelectSigningIn,
-    makeSelectSigningInError
+    makeSelectSigningInError,
+    makeSelectSigningUp,
+    makeSelectSigningUpSuccess,
+    makeSelectsigningUpSuccessUserName,
+    makeSelectSigningUpError,
+    makeSelectSigningUpErrorCode
 };

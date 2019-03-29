@@ -22,8 +22,6 @@ import App from 'containers/App';
 import LanguageProvider from 'containers/LanguageProvider';
 import configureStore from './configureStore';
 
-// Import Language Provider
-
 // Import i18n messages
 import { translationMessages } from './i18n';
 

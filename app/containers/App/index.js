@@ -9,6 +9,7 @@ import { withRouter } from "react-router";
 
 import Footer from 'components/Footer/Loadable';
 import SigninPage from 'containers/SigninPage/Loadable';
+import SignupPage from 'containers/SignupPage/Loadable';
 import DashboardPage from 'containers/DashboardPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -31,6 +32,7 @@ class App extends React.Component {
             <Switch>
                 <ProtectedLayoutRoute exact path="/" component={DashboardPage} />
                 <PublicLayoutRoute exact path="/sign-in" component={SigninPage} />
+                <PublicLayoutRoute exact path="/sign-up" component={SignupPage} />
                 <PublicLayoutRoute path="" component={NotFoundPage} />
             </Switch>
             <Footer />
