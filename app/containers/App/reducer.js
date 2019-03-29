@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 
-import { CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
+import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
     SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE } from 'containers/App/constants';
 
 const initialState = fromJS({
@@ -17,6 +17,12 @@ function appReducer(state = initialState, action) {
     console.log(`### action`, action);
 
     switch (action.type) {
+        case CHECK_AUTHORIZATION_REQUEST:
+            return Object.assign({}, state, {
+                isAuthenticating: true,
+                isAuthenticated: false,
+                user: false
+            });
         case CHECK_AUTHORIZATION_SUCCESS:
             return Object.assign({}, state, {
                 isAuthenticating: false,
@@ -41,6 +47,7 @@ function appReducer(state = initialState, action) {
                 signingInSuccess: true,
                 signingInError: false,
                 user: {
+                    email: action.payload.email,
                     passwordExpired: action.payload.passwordExpired,
                     screenName: action.payload.screen_name,
                     subuser: action.payload.subuser

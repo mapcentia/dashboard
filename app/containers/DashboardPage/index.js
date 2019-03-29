@@ -7,41 +7,32 @@ import { createStructuredSelector } from 'reselect';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import Typography from '@material-ui/core/Typography';
-import { changeUsername } from './actions';
+import Button from '@material-ui/core/Button';
+import { signOut } from 'containers/App/actions';
 import reducer from './reducer';
 import saga from './saga';
 
 /* eslint-disable react/prefer-stateless-function */
-export class HomePage extends React.PureComponent {
-    /**
-     * when initial state username is not null, submit the form to load repos
-     */
+export class DashboardPage extends React.PureComponent {
     componentDidMount() { }
 
     render() {
+        console.log(this.props);
         return (
             <div>
                 <Typography variant="h1" gutterBottom>GC2 Dashboard</Typography>
+                <Button variant="contained" onClick={this.props.onSignOut}>LOG OUT</Button>
             </div>
         );
     }
 }
 
-HomePage.propTypes = {
-    loading: PropTypes.bool,
-    error: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-    repos: PropTypes.oneOfType([PropTypes.array, PropTypes.bool]),
-    onSubmitForm: PropTypes.func,
-    username: PropTypes.string,
-    onChangeUsername: PropTypes.func,
+DashboardPage.propTypes = {
 };
 
 export function mapDispatchToProps(dispatch) {
     return {
-        onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
-        onSubmitForm: evt => {
-            if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-        },
+        onSignOut: () => dispatch(signOut()),
     };
 }
 
@@ -55,8 +46,4 @@ const withConnect = connect(
 const withReducer = injectReducer({ key: 'home', reducer });
 const withSaga = injectSaga({ key: 'home', saga });
 
-export default compose(
-    withReducer,
-    withSaga,
-    withConnect,
-)(HomePage);
+export default compose(withReducer, withSaga, withConnect)(DashboardPage);

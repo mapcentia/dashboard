@@ -23,5 +23,5 @@
     "containers.SigninPage.invalidCredentialsWereProvided": "Invalid credentials were provided",
     "containers.SigninPage.register": "Register",
 
-    "containers.ProtectedLayoutRoute.checkingAuthorizationStatus": "Checking authorization status"
+    "checkingAuthorizationStatus": "Checking authorization status"
 }

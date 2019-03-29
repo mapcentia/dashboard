@@ -9,3 +9,5 @@ export const SIGN_IN_FAILURE = 'App/SIGN_IN_FAILURE';
 export const SIGN_UP_REQUEST = 'App/SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'App/SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'App/SIGN_UP_FAILURE';
+
+export const SIGN_OUT = 'App/SIGN_OUT';

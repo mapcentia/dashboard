@@ -28,15 +28,13 @@ class Signin extends React.Component {
     }
 
     onSubmitHandler(user, password) {
-        console.log(this.props);
-        console.log(`### data`, user, password);
-
         this.props.dispatch(signInRequest({ user, password }));
     }
 
     render() {
 
-console.log(`### error`, this.props.signingInError);
+//console.log(`### error`, this.props.signingInError);
+//console.log(`### signingIn`, this.props.signingIn);
 
         return (
             <Card style={{ maxWidth: `400px` }}>
