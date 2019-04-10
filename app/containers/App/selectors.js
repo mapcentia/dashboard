@@ -15,6 +15,8 @@ const makeSelectsigningUpSuccessUserName = () => createSelector(selectGlobal, gl
 const makeSelectSigningUpError = () => createSelector(selectGlobal, globalState => globalState.signingUpError);
 const makeSelectSigningUpErrorCode = () => createSelector(selectGlobal, globalState => globalState.signingUpErrorCode);
 
+const makeSelectIsRequesting = () => createSelector(selectGlobal, globalState => globalState.isRequesting);
+
 export {
     selectGlobal,
     makeSelectIsAuthenticating,
@@ -26,5 +28,6 @@ export {
     makeSelectSigningUpSuccess,
     makeSelectsigningUpSuccessUserName,
     makeSelectSigningUpError,
-    makeSelectSigningUpErrorCode
+    makeSelectSigningUpErrorCode,
+    makeSelectIsRequesting
 };

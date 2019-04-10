@@ -2,13 +2,16 @@ import { fromJS } from 'immutable';
 
 import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
     SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE,
-    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE } from 'containers/App/constants';
+    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
+    UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS} from 'containers/App/constants';
 
 const initialState = fromJS({
     isAuthenticating: true,
     isAuthenticated: false,
     user: false,
-    
+
+    isRequesting: false,
+
     signingIn: false,
     signingInSuccess: false,
     signingInError: false,
@@ -60,12 +63,7 @@ function appReducer(state = initialState, action) {
                 signingIn: false,
                 signingInSuccess: true,
                 signingInError: false,
-                user: {
-                    email: action.payload.email,
-                    passwordExpired: action.payload.passwordExpired,
-                    screenName: action.payload.screen_name,
-                    subuser: action.payload.subuser
-                },
+                user: action.payload,
                 isAuthenticated: true
             });
         case SIGN_IN_FAILURE:
@@ -97,6 +95,19 @@ function appReducer(state = initialState, action) {
                 signingUpSuccessUserName: false,
                 signingUpError: true,
                 signingUpErrorCode: (action.payload ? action.payload : false),
+            });
+        case UPDATE_USER_PASSWORD_SUCCESS:
+            return Object.assign({}, state, {
+                user: Object.assign({}, state.user, {passwordExpired: false})
+            });
+        case UPDATE_USER_REQUEST:
+            return Object.assign({}, state, {
+                isRequesting: true,
+            });
+        case UPDATE_USER_SUCCESS:
+        case UPDATE_USER_FAILURE:
+            return Object.assign({}, state, {
+                isRequesting: false,
             });
         default:
             return state;

@@ -18,12 +18,11 @@ export class DashboardPage extends React.PureComponent {
     componentDidMount() { }
 
     render() {
-        console.log(this.props);
         return (
             <Grid container direction="row" justify="center" alignItems="flex-start">
                 <Grid item>
                     <Typography variant="h6" color="inherit">
-                        To do next: CRUD subusers, update own password, the expired password notification
+                        To do next: CRUD subusers
                     </Typography>
                 </Grid>
             </Grid>

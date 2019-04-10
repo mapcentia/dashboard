@@ -1,49 +1,40 @@
-import axios from 'axios';
 import { push } from 'react-router-redux';
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { checkAuthorizationSuccess, checkAuthorizationFailure, signInSuccess, signInFailure, signUpSuccess, signUpFailure } from 'containers/App/actions';
+import { checkAuthorizationSuccess, checkAuthorizationFailure,
+    signInSuccess, signInFailure,
+    signUpSuccess, signUpFailure,
+    updateUserSuccess, updateUserFailure, updateUserPasswordSuccess } from 'containers/App/actions';
 
-import config from '../../config';
-import { CHECK_AUTHORIZATION_REQUEST, SIGN_IN_REQUEST, SIGN_OUT,
-    SIGN_UP_REQUEST } from 'containers/App/constants';
+import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
+    SIGN_IN_REQUEST, SIGN_IN_SUCCESS,
+    SIGN_OUT, SIGN_UP_REQUEST, UPDATE_USER_REQUEST } from 'containers/App/constants';
 
-// Initial authorization check
-const checkAuthorizationCall = () => {
-    return axios.get(`${config.apiUrl}session`, { withCredentials: true });
-};
+import {checkAuthorizationCall, signInCall, signUpCall, updateUserCall} from 'api';
 
 export function* checkAuthorizationGenerator() {
     try {
         const response = yield call(checkAuthorizationCall);
         yield put(checkAuthorizationSuccess(response.data.data));
     } catch (err) {
+        console.log(err);
         yield put(checkAuthorizationFailure());
     }
 }
-
-// Sign in 
-const signInCall = (action) => {
-    return axios.post(`${config.apiUrl}session/start`, action.payload, {withCredentials: true});
-};
 
 export function* signInGenerator(credentials) {
     try {
         const result = yield call(signInCall, credentials);
         yield put(signInSuccess(result.data.data));
-        yield put(push(`/`));
+
+        if (result.data.data.passwordExpired) {
+            yield put(push(`/account`));
+        } else {
+            yield put(push(`/`));
+        }
     } catch (err) {
         yield put(signInFailure());
     }
 }
-
-// Sign in 
-const signUpCall = (action) => {
-    return axios.post(`${config.apiUrl}user`, action.payload, {
-        validateStatus: (status) => {
-            return status >= 200 && status <= 400;
-        }
-    });
-};
 
 export function* signUpGenerator(data) {
     const response = yield call(signUpCall, data);
@@ -66,9 +57,39 @@ export function* signOutGenerator() {
     yield put(push(`/sign-in`));
 }
 
+export function* updateUserGenerator(action) {
+    const response = yield call(updateUserCall, action);
+    try {
+        if (response.status === 200) {
+            yield put(updateUserSuccess());
+            if (action.payload.data.onSuccess) action.payload.data.onSuccess();
+            if (action.payload.data && action.payload.data.oldPassword && action.payload.data.newPassword) {
+                yield put(updateUserPasswordSuccess());
+            }
+        } else {
+            if (response.data && response.data.errorCode) {
+                yield put(updateUserFailure(response.data.errorCode));
+            } else {
+                yield put(updateUserFailure());
+            }
+        }
+    } catch(err) {
+        console.error(err);
+        yield put(updateUserFailure());
+    }
+}
+
+export function* forceUserUpdateGenerator(action) {
+    if (action.payload.passwordExpired) {
+        yield put(push(`/account`));
+    }
+}
+
 export default function* checkAuthorization() {
     yield takeLatest(CHECK_AUTHORIZATION_REQUEST, checkAuthorizationGenerator);
     yield takeLatest(SIGN_IN_REQUEST, signInGenerator);
     yield takeLatest(SIGN_UP_REQUEST, signUpGenerator);
     yield takeLatest(SIGN_OUT, signOutGenerator);
+    yield takeLatest(UPDATE_USER_REQUEST, updateUserGenerator);
+    yield takeLatest(CHECK_AUTHORIZATION_SUCCESS, forceUserUpdateGenerator);
 }

@@ -11,6 +11,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { passwordIsStrongEnough } from 'utils/shared';
+
 class SignupForm extends React.Component {
     constructor(props) {
         super(props);
@@ -28,14 +30,6 @@ class SignupForm extends React.Component {
     };
 
     render() {
-        const passwordIsStrongEnough = (password) => {
-            if (password.length < 8) return false;
-            if (!(/[A-Z]/.test(password))) return false;
-            if (!(/[a-z]/.test(password))) return false;
-            if (!(/\d/.test(password))) return false;
-            return true;
-        };
-
         let nameIsValid = (this.state.name.length > 3);
         let emailIsValid = validator.validate(this.state.email);
         let password1IsValid = (passwordIsStrongEnough(this.state.password1));

@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import {injectIntl} from 'react-intl';
 
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
