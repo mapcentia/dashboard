@@ -1,27 +1,35 @@
 {
     "welcomeDescription": "Integrate, manage, visualise, and analyze all your enterprise geospatial data.",
 
-    "components.Footer.author.message": "Made with love by {author}.",
-    "components.Footer.license.message": "This project is licensed under the MIT license.",
-
-    "components.Header.features": "Features",
-    "components.Header.home": "Home",
-
-
     "containers.NotFoundPage.notFound": "Page was not found",
     "containers.NotFoundPage.pleaseCheckTheAddressOrContactTheSupport": "Please check the address or contact the support team",
     "containers.NotFoundPage.homePage": "Home page",
 
+    "containers.SubuserPage.description": "The sub-user can log into this database in the same way as the parent user, which can grant privileges to sub-users on layer level. The sub-user name must be globally unique.",
+    "containers.SubuserPage.descriptionCreateSchema": "You can choose to create a schema for the new sub-user. The sub-user will be able to create new layers with all privileges inside the schema. The sub-user will also be able to grant privileges on layers inside the schema to other sub-users. You can also create the schema later - just use the name of the sub-user.",
+    "containers.SubuserPage.descriptionInheritPrivileges": "Inherit the privileges from another sub-user. If set the new sub-users will have the same privileges as the selected. That is, the selected sub-user will serve as a user group. You will not be able to grant privileges directly to the new sub-user.",
+
+    "Add": "Add",
     "Geocloud Dashboard": "Geocloud Dashboard",
+    "Create schema": "Create schema",
     "Username": "Username",
     "Password": "Password",
+    "Save": "Save",
     "Update": "Update",
+    "Delete": "Delete",
+    "Create new subuser": "Create new subuser",
     "Retype new password": "Retype new password",
     "Current password": "Current password",
     "New password": "New password",
     "Sign in": "Sign in",
     "Sign out": "Sign out",
     "Name": "Name",
+    "Filter": "Filter",
+    "Do not inherit": "Do not inherit",
+    "No subusers yet": "No subusers yet",
+    "No subusers found": "No subusers found",
+    "Subusers": "Subusers",
+    "Schemas": "Schemas",
     "Password was updated": "Password was updated",
     "Register": "Register",
     "Email address": "Email address",

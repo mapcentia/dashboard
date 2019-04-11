@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+
+import SubusersPanel from 'components/SubusersPanel';
 
 import reducer from './reducer';
 import saga from './saga';
@@ -18,12 +21,18 @@ export class DashboardPage extends React.PureComponent {
     componentDidMount() { }
 
     render() {
+
+        // @todo Different layout for super and sub users
+
         return (
-            <Grid container direction="row" justify="center" alignItems="flex-start">
-                <Grid item>
+            <Grid container spacing={24}>
+                <Grid item md={6}>
                     <Typography variant="h6" color="inherit">
-                        To do next: CRUD subusers
+                        <FormattedMessage id="Schemas"/>
                     </Typography>
+                </Grid>
+                <Grid item md={6}>
+                    <SubusersPanel/>
                 </Grid>
             </Grid>
         );

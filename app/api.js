@@ -28,4 +28,20 @@ const updateUserCall = (action) => {
     }, {withCredentials: true});
 };
 
-export {checkAuthorizationCall, signInCall, signUpCall, updateUserCall};
+const getSubusersCall = (action) => {
+    return axios.get(`${config.apiUrl}user/${action.payload.screenName}/subusers`, {withCredentials: true});
+}
+
+const createSubuserCall = (action) => {
+    return axios.post(`${config.apiUrl}user`, action.payload, {withCredentials: true});
+}
+
+const updateSubuserCall = (action) => {
+    return axios.put(`${config.apiUrl}user/${action.payload.screenName}`, action.payload, {withCredentials: true});
+}
+
+const deleteSubuserCall = (action) => {
+    return axios.delete(`${config.apiUrl}user/${action.payload.screenName}`, {withCredentials: true});
+}
+
+export {checkAuthorizationCall, signInCall, signUpCall, updateUserCall, getSubusersCall, createSubuserCall, updateSubuserCall, deleteSubuserCall};

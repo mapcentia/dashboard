@@ -64,9 +64,11 @@ class ProtectedLayout extends React.Component {
                                 <Toolbar>
                                     <Grid container direction="row" justify="space-between" alignItems="flex-start">
                                         <Grid item>
-                                            <Typography variant="h6" color="inherit">
-                                                <FormattedMessage id="Geocloud Dashboard" />
-                                            </Typography>
+                                            <StyledButtonLink to="/">
+                                                <Typography variant="h6" color="inherit">
+                                                    <FormattedMessage id="Geocloud Dashboard" />
+                                                </Typography>
+                                            </StyledButtonLink>
                                         </Grid>
                                         <Grid item>
                                             <div style={{display: `inline-block`, paddingRight: `20px`}}>

@@ -3,7 +3,8 @@ import { fromJS } from 'immutable';
 import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
     SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE,
     SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
-    UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS} from 'containers/App/constants';
+    UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
+    GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE } from 'containers/App/constants';
 
 const initialState = fromJS({
     isAuthenticating: true,
@@ -20,12 +21,14 @@ const initialState = fromJS({
     signingUpSuccess: false,
     signingUpSuccessUserName: false,
     signingUpError: false,
-    signingUpErrorCode: ``
+    signingUpErrorCode: ``,
+
+    subusers: []
 });
 
 function appReducer(state = initialState, action) {
     
-    console.log(`### action`, action);
+    console.log(`### state / action`, state, action);
 
     switch (action.type) {
         case SIGN_OUT:
@@ -106,6 +109,20 @@ function appReducer(state = initialState, action) {
             });
         case UPDATE_USER_SUCCESS:
         case UPDATE_USER_FAILURE:
+            return Object.assign({}, state, {
+                isRequesting: false,
+            });
+        case GET_SUBUSERS_REQUEST:
+            return Object.assign({}, state, {
+                isRequesting: true,
+                subusers: []
+            });
+        case GET_SUBUSERS_SUCCESS:
+            return Object.assign({}, state, {
+                isRequesting: false,
+                subusers: action.payload
+            });
+        case GET_SUBUSERS_FAILURE:
             return Object.assign({}, state, {
                 isRequesting: false,
             });

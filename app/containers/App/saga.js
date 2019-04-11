@@ -3,13 +3,19 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 import { checkAuthorizationSuccess, checkAuthorizationFailure,
     signInSuccess, signInFailure,
     signUpSuccess, signUpFailure,
-    updateUserSuccess, updateUserFailure, updateUserPasswordSuccess } from 'containers/App/actions';
+    updateUserSuccess, updateUserFailure, updateUserPasswordSuccess,
+    getSubusersRequest, getSubusersSuccess, getSubusersFailure,
+    createSubuserSuccess, createSubuserFailure,
+    updateSubuserSuccess, updateSubuserFailure,
+    deleteSubuserSuccess, deleteSubuserFailure } from 'containers/App/actions';
 
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
-    SIGN_IN_REQUEST, SIGN_IN_SUCCESS,
-    SIGN_OUT, SIGN_UP_REQUEST, UPDATE_USER_REQUEST } from 'containers/App/constants';
+    SIGN_IN_REQUEST, SIGN_OUT, SIGN_UP_REQUEST, UPDATE_USER_REQUEST,
+    CREATE_SUBUSER_REQUEST, UPDATE_SUBUSER_REQUEST, DELETE_SUBUSER_REQUEST,
+    GET_SUBUSERS_REQUEST } from 'containers/App/constants';
 
-import {checkAuthorizationCall, signInCall, signUpCall, updateUserCall} from 'api';
+import {checkAuthorizationCall, signInCall, signUpCall, updateUserCall,
+    getSubusersCall, createSubuserCall, updateSubuserCall, deleteSubuserCall} from 'api';
 
 export function* checkAuthorizationGenerator() {
     try {
@@ -79,6 +85,43 @@ export function* updateUserGenerator(action) {
     }
 }
 
+export function* getSubusersGenerator(action) {
+    const response = yield call(getSubusersCall, action);
+    try {
+        yield put(getSubusersSuccess(response.data.data));
+    } catch(err) {
+        yield put(getSubusersFailure());
+    }
+}
+
+export function* createSubuserGenerator(action) {
+    const response = yield call(createSubuserCall, action);
+    try {
+        yield put(createSubuserSuccess(response.data.data));
+    } catch(err) {
+        yield put(createSubuserFailure());
+    }
+}
+
+export function* updateSubuserGenerator(action) {
+    const response = yield call(updateSubuserCall, action);
+    try {
+        yield put(updateSubuserSuccess(response.data.data));
+    } catch(err) {
+        yield put(updateSubuserFailure());
+    }
+}
+
+export function* deleteSubuserGenerator(action) {
+    yield call(deleteSubuserCall, action);
+    try {
+        yield put(deleteSubuserSuccess());
+        yield put(getSubusersRequest(action));
+    } catch(err) {
+        yield put(deleteSubuserFailure());
+    }
+}
+
 export function* forceUserUpdateGenerator(action) {
     if (action.payload.passwordExpired) {
         yield put(push(`/account`));
@@ -92,4 +135,9 @@ export default function* checkAuthorization() {
     yield takeLatest(SIGN_OUT, signOutGenerator);
     yield takeLatest(UPDATE_USER_REQUEST, updateUserGenerator);
     yield takeLatest(CHECK_AUTHORIZATION_SUCCESS, forceUserUpdateGenerator);
+    yield takeLatest(GET_SUBUSERS_REQUEST, getSubusersGenerator);
+    yield takeLatest(CREATE_SUBUSER_REQUEST, createSubuserGenerator);
+    yield takeLatest(UPDATE_SUBUSER_REQUEST, updateSubuserGenerator);
+    yield takeLatest(DELETE_SUBUSER_REQUEST, deleteSubuserGenerator);
 }
+
