@@ -9,11 +9,16 @@ const makeSelectUser = () => createSelector(selectGlobal, globalState => globalS
 const makeSelectSigningIn = () => createSelector(selectGlobal, globalState => globalState.signingIn);
 const makeSelectSigningInError = () => createSelector(selectGlobal, globalState => globalState.signingInError);
 
-const makeSelectSigningUp = () => createSelector(selectGlobal, globalState => globalState.signingUp);
-const makeSelectSigningUpSuccess = () => createSelector(selectGlobal, globalState => globalState.signingUpSuccess);
-const makeSelectsigningUpSuccessUserName = () => createSelector(selectGlobal, globalState => globalState.signingUpSuccessUserName);
-const makeSelectSigningUpError = () => createSelector(selectGlobal, globalState => globalState.signingUpError);
-const makeSelectSigningUpErrorCode = () => createSelector(selectGlobal, globalState => globalState.signingUpErrorCode);
+const makeSelectCreateUser = () => createSelector(selectGlobal, globalState => globalState.createUser);
+const makeSelectCreateUserSuccess = () => createSelector(selectGlobal, globalState => globalState.createUserSuccess);
+const makeSelectCreateUserSuccessUserName = () => createSelector(selectGlobal, globalState => globalState.createUserSuccessUserName);
+const makeSelectCreateUserError = () => createSelector(selectGlobal, globalState => globalState.createUserError);
+const makeSelectCreateUserErrorCode = () => createSelector(selectGlobal, globalState => globalState.createUserErrorCode);
+
+const makeSelectUpdateUserSuccess = () => createSelector(selectGlobal, globalState => globalState.updateUserSuccess);
+const makeSelectUpdateUserSuccessUserName = () => createSelector(selectGlobal, globalState => globalState.updateUserSuccessUserName);
+const makeSelectUpdateUserError = () => createSelector(selectGlobal, globalState => globalState.updateUserError);
+const makeSelectUpdateUserErrorCode = () => createSelector(selectGlobal, globalState => globalState.updateUserErrorCode);
 
 const makeSelectIsRequesting = () => createSelector(selectGlobal, globalState => globalState.isRequesting);
 const makeSelectSubusers = () => createSelector(selectGlobal, globalState => globalState.subusers);
@@ -25,11 +30,18 @@ export {
     makeSelectUser,
     makeSelectSigningIn,
     makeSelectSigningInError,
-    makeSelectSigningUp,
-    makeSelectSigningUpSuccess,
-    makeSelectsigningUpSuccessUserName,
-    makeSelectSigningUpError,
-    makeSelectSigningUpErrorCode,
+    makeSelectCreateUser,
+
+    makeSelectCreateUserSuccess,
+    makeSelectCreateUserSuccessUserName,
+    makeSelectCreateUserError,
+    makeSelectCreateUserErrorCode,
+
+    makeSelectUpdateUserSuccess,
+    makeSelectUpdateUserSuccessUserName,
+    makeSelectUpdateUserError,
+    makeSelectUpdateUserErrorCode,
+
     makeSelectIsRequesting,
     makeSelectSubusers
 };

@@ -2,20 +2,17 @@ import { push } from 'react-router-redux';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { checkAuthorizationSuccess, checkAuthorizationFailure,
     signInSuccess, signInFailure,
-    signUpSuccess, signUpFailure,
+    createUserSuccess, createUserFailure,
     updateUserSuccess, updateUserFailure, updateUserPasswordSuccess,
-    getSubusersRequest, getSubusersSuccess, getSubusersFailure,
-    createSubuserSuccess, createSubuserFailure,
-    updateSubuserSuccess, updateSubuserFailure,
-    deleteSubuserSuccess, deleteSubuserFailure } from 'containers/App/actions';
+    deleteUserSuccess, deleteUserFailure,
+    getSubusersRequest, getSubusersSuccess, getSubusersFailure } from 'containers/App/actions';
 
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
-    SIGN_IN_REQUEST, SIGN_OUT, SIGN_UP_REQUEST, UPDATE_USER_REQUEST,
-    CREATE_SUBUSER_REQUEST, UPDATE_SUBUSER_REQUEST, DELETE_SUBUSER_REQUEST,
+    SIGN_IN_REQUEST, SIGN_OUT,
+    CREATE_USER_REQUEST, UPDATE_USER_REQUEST, DELETE_USER_REQUEST,
     GET_SUBUSERS_REQUEST } from 'containers/App/constants';
 
-import {checkAuthorizationCall, signInCall, signUpCall, updateUserCall,
-    getSubusersCall, createSubuserCall, updateSubuserCall, deleteSubuserCall} from 'api';
+import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, deleteUserCall} from 'api';
 
 export function* checkAuthorizationGenerator() {
     try {
@@ -42,20 +39,21 @@ export function* signInGenerator(credentials) {
     }
 }
 
-export function* signUpGenerator(data) {
-    const response = yield call(signUpCall, data);
+export function* createUserGenerator(data) {
+    const response = yield call(createUserCall, data);
     try {
-        if (response.status === 200) {
-            yield put(signUpSuccess(response.data.data.screenname));
+        if (response.status && response.status === 200) {
+            yield put(createUserSuccess(response.data.data.screenname));
         } else {
             if (response.data && response.data.errorCode) {
-                yield put(signUpFailure(response.data.errorCode));
+                yield put(createUserFailure(response.data.errorCode));
             } else {
-                yield put(signUpFailure());
+                yield put(createUserFailure());
             }
         }
     } catch(err) {
-        yield put(signUpFailure());
+        console.error(err);
+        yield put(createUserFailure());
     }
 }
 
@@ -85,40 +83,23 @@ export function* updateUserGenerator(action) {
     }
 }
 
+export function* deleteUserGenerator(action) {
+    const response = yield call(deleteUserCall, action);
+    try {
+        yield put(deleteUserSuccess());
+        yield put(getSubusersRequest(action));
+    } catch(err) {
+        console.error(err);
+        yield put(deleteUserFailure());
+    }
+}
+
 export function* getSubusersGenerator(action) {
     const response = yield call(getSubusersCall, action);
     try {
         yield put(getSubusersSuccess(response.data.data));
     } catch(err) {
         yield put(getSubusersFailure());
-    }
-}
-
-export function* createSubuserGenerator(action) {
-    const response = yield call(createSubuserCall, action);
-    try {
-        yield put(createSubuserSuccess(response.data.data));
-    } catch(err) {
-        yield put(createSubuserFailure());
-    }
-}
-
-export function* updateSubuserGenerator(action) {
-    const response = yield call(updateSubuserCall, action);
-    try {
-        yield put(updateSubuserSuccess(response.data.data));
-    } catch(err) {
-        yield put(updateSubuserFailure());
-    }
-}
-
-export function* deleteSubuserGenerator(action) {
-    yield call(deleteSubuserCall, action);
-    try {
-        yield put(deleteSubuserSuccess());
-        yield put(getSubusersRequest(action));
-    } catch(err) {
-        yield put(deleteSubuserFailure());
     }
 }
 
@@ -131,13 +112,12 @@ export function* forceUserUpdateGenerator(action) {
 export default function* checkAuthorization() {
     yield takeLatest(CHECK_AUTHORIZATION_REQUEST, checkAuthorizationGenerator);
     yield takeLatest(SIGN_IN_REQUEST, signInGenerator);
-    yield takeLatest(SIGN_UP_REQUEST, signUpGenerator);
     yield takeLatest(SIGN_OUT, signOutGenerator);
+    yield takeLatest(CREATE_USER_REQUEST, createUserGenerator);
     yield takeLatest(UPDATE_USER_REQUEST, updateUserGenerator);
+    yield takeLatest(DELETE_USER_REQUEST, deleteUserGenerator);
     yield takeLatest(CHECK_AUTHORIZATION_SUCCESS, forceUserUpdateGenerator);
     yield takeLatest(GET_SUBUSERS_REQUEST, getSubusersGenerator);
-    yield takeLatest(CREATE_SUBUSER_REQUEST, createSubuserGenerator);
-    yield takeLatest(UPDATE_SUBUSER_REQUEST, updateSubuserGenerator);
-    yield takeLatest(DELETE_SUBUSER_REQUEST, deleteSubuserGenerator);
+    
 }
 

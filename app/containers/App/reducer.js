@@ -2,9 +2,10 @@ import { fromJS } from 'immutable';
 
 import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
     SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE,
-    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
+    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
-    GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE } from 'containers/App/constants';
+    GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
+    CREATE_UPDATE_USER_RESET } from 'containers/App/constants';
 
 const initialState = fromJS({
     isAuthenticating: true,
@@ -17,18 +18,24 @@ const initialState = fromJS({
     signingInSuccess: false,
     signingInError: false,
 
-    signingUp: false,
-    signingUpSuccess: false,
-    signingUpSuccessUserName: false,
-    signingUpError: false,
-    signingUpErrorCode: ``,
+    createUser: false,
+    createUserSuccess: false,
+    createUserSuccessUserName: false,
+    createUserError: false,
+    createUserErrorCode: ``,
+
+    updateUser: false,
+    updateUserSuccess: false,
+    updateUserSuccessUserName: false,
+    updateUserError: false,
+    updateUserErrorCode: ``,
 
     subusers: []
 });
 
 function appReducer(state = initialState, action) {
     
-    console.log(`### state / action`, state, action);
+    console.log(`### action`, action);
 
     switch (action.type) {
         case SIGN_OUT:
@@ -57,12 +64,14 @@ function appReducer(state = initialState, action) {
             });
         case SIGN_IN_REQUEST:
             return Object.assign({}, state, {
+                isRequesting: true,
                 signingIn: true,
                 signingInSuccess: false,
                 signingInError: false,
             });
         case SIGN_IN_SUCCESS:
             return Object.assign({}, state, {
+                isRequesting: false,
                 signingIn: false,
                 signingInSuccess: true,
                 signingInError: false,
@@ -71,33 +80,37 @@ function appReducer(state = initialState, action) {
             });
         case SIGN_IN_FAILURE:
             return Object.assign({}, state, {
+                isRequesting: false,
                 signingIn: false,
                 signingInSuccess: false,
                 signingInError: true,
                 user: false
             });
-        case SIGN_UP_REQUEST:
+        case CREATE_USER_REQUEST:
             return Object.assign({}, state, {
-                signingUp: true,
-                signingUpSuccess: false,
-                signingUpSuccessUserName: false,
-                signingUpError: false,
-                signingUpErrorCode: ``
+                isRequesting: true,
+                createUser: true,
+                createUserSuccess: false,
+                createUserSuccessUserName: false,
+                createUserError: false,
+                createUserErrorCode: ``
             });
-        case SIGN_UP_SUCCESS:
+        case CREATE_USER_SUCCESS:
             return Object.assign({}, state, {
-                signingUp: false,
-                signingUpSuccess: true,
-                signingUpSuccessUserName: action.payload,
-                signingUpError: false,
+                isRequesting: false,
+                createUser: false,
+                createUserSuccess: true,
+                createUserSuccessUserName: action.payload,
+                createUserError: false,
             });
-        case SIGN_UP_FAILURE:
+        case CREATE_USER_FAILURE:
             return Object.assign({}, state, {
-                signingUp: false,
-                signingUpSuccess: false,
-                signingUpSuccessUserName: false,
-                signingUpError: true,
-                signingUpErrorCode: (action.payload ? action.payload : false),
+                isRequesting: false,
+                createUser: false,
+                createUserSuccess: false,
+                createUserSuccessUserName: false,
+                createUserError: true,
+                createUserErrorCode: (action.payload ? action.payload : false),
             });
         case UPDATE_USER_PASSWORD_SUCCESS:
             return Object.assign({}, state, {
@@ -108,14 +121,41 @@ function appReducer(state = initialState, action) {
                 isRequesting: true,
             });
         case UPDATE_USER_SUCCESS:
+            return Object.assign({}, state, {
+                isRequesting: false,
+                updateUser: false,
+                updateUserSuccess: true,
+                updateUserSuccessUserName: action.payload,
+                updateUserError: false,
+            });
         case UPDATE_USER_FAILURE:
             return Object.assign({}, state, {
                 isRequesting: false,
+                updateUser: false,
+                updateUserSuccess: false,
+                updateUserSuccessUserName: false,
+                updateUserError: true,
+                updateUserErrorCode: (action.payload ? action.payload : false),
+            });
+        case CREATE_UPDATE_USER_RESET:
+            return Object.assign({}, state, {
+                isRequesting: false,
+
+                createUser: initialState.createUser,
+                createUserSuccess: initialState.createUserSuccess,
+                createUserSuccessUserName: initialState.createUserSuccessUserName,
+                createUserError: initialState.createUserError,
+                createUserErrorCode: initialState.createUserErrorCode,
+
+                updateUser: initialState.updateUser,
+                updateUserSuccess: initialState.updateUserSuccess,
+                updateUserSuccessUserName: initialState.updateUserSuccessUserName,
+                updateUserError: initialState.updateUserError,
+                updateUserErrorCode: initialState.updateUserErrorCode,
             });
         case GET_SUBUSERS_REQUEST:
             return Object.assign({}, state, {
                 isRequesting: true,
-                subusers: []
             });
         case GET_SUBUSERS_SUCCESS:
             return Object.assign({}, state, {

@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
-import { makeSelectSigningUp, makeSelectSigningUpSuccess, makeSelectsigningUpSuccessUserName, makeSelectSigningUpError, makeSelectSigningUpErrorCode } from 'containers/App/selectors';
-import { signUpRequest } from 'containers/App/actions';
+import { makeSelectCreateUser, makeSelectCreateUserSuccess, makeSelectCreateUserSuccessUserName, makeSelectCreateUserError, makeSelectCreateUserErrorCode } from 'containers/App/selectors';
+import { createUserRequest } from 'containers/App/actions';
 import SignupForm from './SignupForm';
 import PublicFormsWrapper from 'components/PublicFormsWrapper';
 import StyledLink from 'components/StyledLink';
@@ -41,7 +41,7 @@ class SignupPage extends React.Component {
                         </Typography>
                     </SuccessWrapper>
                 ) : (
-                    <SignupForm disabled={this.props.loading ? true : false} onSubmit={data => { this.props.dispatch(signUpRequest(data))}}/>
+                    <SignupForm disabled={this.props.loading ? true : false} onSubmit={data => { this.props.dispatch(createUserRequest(data))}}/>
                 )}
 
                 {this.props.error ? (
@@ -54,7 +54,7 @@ class SignupPage extends React.Component {
                 {this.props.success ? false : (<Divider style={{ marginTop: `20px`, marginBottom: `20px` }}/>)}
                 <StyledLink to="/sign-in">
                     <Button type="button" fullWidth variant="contained" color="secondary">
-                        <FormattedMessage id="signIn" />
+                        <FormattedMessage id="Sign in" />
                     </Button>
                 </StyledLink>
             </PublicFormsWrapper>
@@ -63,11 +63,11 @@ class SignupPage extends React.Component {
 }
 
 const mapStateToProps = createStructuredSelector({
-    loading: makeSelectSigningUp(),
-    success: makeSelectSigningUpSuccess(),
-    username: makeSelectsigningUpSuccessUserName(),
-    error: makeSelectSigningUpError(),
-    errorCode: makeSelectSigningUpErrorCode(),
+    loading: makeSelectCreateUser(),
+    success: makeSelectCreateUserSuccess(),
+    username: makeSelectCreateUserSuccessUserName(),
+    error: makeSelectCreateUserError(),
+    errorCode: makeSelectCreateUserErrorCode(),
 });
 
 export default connect(mapStateToProps)(SignupPage);

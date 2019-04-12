@@ -105,15 +105,16 @@ class SignupForm extends React.Component {
                     label={this.props.intl.formatMessage({id: "I have read the User agreement and Privacy policy"})}
                     />
                 </FormGroup>
-
             </div>
 
             <Button
                 type="button"
                 onClick={() => { this.props.onSubmit({
-                    name: this.state.name,
-                    email: this.state.email,
-                    password: this.state.password1
+                    data: {
+                        name: this.state.name,
+                        email: this.state.email,
+                        password: this.state.password1
+                    }
                 })}}
                 fullWidth
                 variant="contained"

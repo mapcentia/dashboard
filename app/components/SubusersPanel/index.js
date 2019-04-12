@@ -20,7 +20,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { makeSelectUser, makeSelectSubusers } from 'containers/App/selectors';
-import { getSubusersRequest, deleteSubuserRequest } from 'containers/App/actions';
+import { getSubusersRequest, deleteUserRequest } from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
 
@@ -41,7 +41,7 @@ export class SubusersPanel extends React.PureComponent {
 
     deleteHandler(screenName) {
         if (confirm(this.props.intl.formatMessage({id: `Delete`}) + '?')) {
-            this.props.dispatch(deleteSubuserRequest({screenName}));
+            this.props.dispatch(deleteUserRequest({screenName}));
         }
     }
 
@@ -65,23 +65,23 @@ export class SubusersPanel extends React.PureComponent {
             </Grid>);
 
             this.props.subusers.map((item, index) => {
-                if (this.state.subusersFilter === `` || (item.screenname.indexOf(this.state.subusersFilter) > -1 || item.email.indexOf(this.state.subusersFilter) > -1)) {
+                if (this.state.subusersFilter === `` || (item.screenName.indexOf(this.state.subusersFilter) > -1 || item.email.indexOf(this.state.subusersFilter) > -1)) {
                     subuserComponents.push(<Card key={`subuser_card_${index}`} style={{marginBottom: `10px`}}>
                         <CardHeader
-                            avatar={<Avatar aria-label="Recipe" style={{backgroundColor: indigo[500]}}>{item.screenname[0].toUpperCase()}</Avatar>}
+                            avatar={<Avatar aria-label="Recipe" style={{backgroundColor: indigo[500]}}>{item.screenName[0].toUpperCase()}</Avatar>}
                             action={<div>
-                                <StyledButtonLink to={`/subuser/edit/${item.screenname}`}>
+                                <StyledButtonLink to={`/subuser/edit/${item.screenName}`}>
                                     <IconButton color="primary">
                                         <EditIcon />
                                     </IconButton>
                                 </StyledButtonLink>
-                                <IconButton color="secondary" onClick={() => {this.deleteHandler(item.screenname)}}>
+                                <IconButton color="secondary" onClick={() => {this.deleteHandler(item.screenName)}}>
                                     <DeleteIcon />
                                 </IconButton>
                             </div>}
-                            title={item.screenname}
+                            title={item.screenName}
                             subheader={item.email}
-                            style={{marginBottom: `10px`}}/>
+                            style={{marginBottom: `10px`, paddingBottom: `0px`}}/>
                     </Card>);
                 }
             });

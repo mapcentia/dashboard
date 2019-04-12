@@ -1,12 +1,11 @@
 import Cookies from 'universal-cookie';
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE } from 'containers/App/constants';
 import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, SIGN_OUT,
-    SIGN_UP_REQUEST, SIGN_UP_SUCCESS, SIGN_UP_FAILURE,
+    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
-    CREATE_SUBUSER_REQUEST, CREATE_SUBUSER_SUCCESS, CREATE_SUBUSER_FAILURE,
-    UPDATE_SUBUSER_REQUEST, UPDATE_SUBUSER_SUCCESS, UPDATE_SUBUSER_FAILURE,
-    DELETE_SUBUSER_REQUEST, DELETE_SUBUSER_SUCCESS, DELETE_SUBUSER_FAILURE } from 'containers/App/constants';
+    DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAILURE,
+    CREATE_UPDATE_USER_RESET} from 'containers/App/constants';
 
 const cookies = new Cookies();
 
@@ -28,6 +27,25 @@ const normalizeUser = (userData) => {
     return data;
 }
 
+// Reset state
+export function createUpdateUserReset() {
+    return { type: CREATE_UPDATE_USER_RESET };
+}
+
+// Create user
+export function createUserRequest(payload) {
+    return { type: CREATE_USER_REQUEST, payload };
+}
+
+export function createUserSuccess(payload) {
+    return { type: CREATE_USER_SUCCESS, payload};
+}
+
+export function createUserFailure(payload = false) {
+    return { type: CREATE_USER_FAILURE, payload };
+}
+
+// Update user
 export function updateUserRequest(screenName, data) {
     return { type: UPDATE_USER_REQUEST, payload: {screenName, data} };
 }
@@ -42,6 +60,19 @@ export function updateUserFailure(payload = false) {
 
 export function updateUserPasswordSuccess() {
     return { type: UPDATE_USER_PASSWORD_SUCCESS };
+}
+
+// Delete user
+export function deleteUserRequest(payload) {
+    return { type: DELETE_USER_REQUEST, payload };
+}
+
+export function deleteUserSuccess() {
+    return { type: DELETE_USER_SUCCESS };
+}
+
+export function deleteUserFailure() {
+    return { type: DELETE_USER_FAILURE };
 }
 
 export function checkAuthorizationRequest() {
@@ -77,19 +108,6 @@ export function signInFailure() {
     return { type: SIGN_IN_FAILURE };
 }
 
-// Sign up
-export function signUpRequest(payload) {
-    return { type: SIGN_UP_REQUEST, payload };
-}
-
-export function signUpSuccess(payload) {
-    return { type: SIGN_UP_SUCCESS, payload};
-}
-
-export function signUpFailure(payload = false) {
-    return { type: SIGN_UP_FAILURE, payload };
-}
-
 // Sign out
 export function signOut() {
     cookies.remove('PHPSESSID');
@@ -107,17 +125,4 @@ export function getSubusersSuccess(payload) {
 
 export function getSubusersFailure() {
     return { type: GET_SUBUSERS_FAILURE };
-}
-
-// Delete subuser
-export function deleteSubuserRequest(payload) {
-    return { type: DELETE_SUBUSER_REQUEST, payload };
-}
-
-export function deleteSubuserSuccess() {
-    return { type: DELETE_SUBUSER_SUCCESS };
-}
-
-export function deleteSubuserFailure() {
-    return { type: DELETE_SUBUSER_FAILURE };
 }
