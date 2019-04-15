@@ -11,6 +11,7 @@ import injectSaga from 'utils/injectSaga';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 
+import SchemasPanel from 'components/SchemasPanel';
 import SubusersPanel from 'components/SubusersPanel';
 
 import reducer from './reducer';
@@ -23,13 +24,11 @@ export class DashboardPage extends React.PureComponent {
     render() {
 
         // @todo Different layout for super and sub users
-
+        
         return (
             <Grid container spacing={24}>
                 <Grid item md={6}>
-                    <Typography variant="h6" color="inherit">
-                        <FormattedMessage id="Schemas"/>
-                    </Typography>
+                    <SchemasPanel/>
                 </Grid>
                 <Grid item md={6}>
                     <SubusersPanel/>

@@ -4,6 +4,7 @@ import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, SIGN_OUT,
     CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
+    GET_SCHEMAS_REQUEST, GET_SCHEMAS_SUCCESS, GET_SCHEMAS_FAILURE,
     DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAILURE,
     CREATE_UPDATE_USER_RESET} from 'containers/App/constants';
 
@@ -125,4 +126,17 @@ export function getSubusersSuccess(payload) {
 
 export function getSubusersFailure() {
     return { type: GET_SUBUSERS_FAILURE };
+}
+
+// Get the list of schemas
+export function getSchemasRequest() {
+    return { type: GET_SCHEMAS_REQUEST };
+}
+
+export function getSchemasSuccess(payload) {
+    return { type: GET_SCHEMAS_SUCCESS, payload};
+}
+
+export function getSchemasFailure() {
+    return { type: GET_SCHEMAS_FAILURE };
 }

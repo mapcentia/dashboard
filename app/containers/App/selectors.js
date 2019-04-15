@@ -22,6 +22,7 @@ const makeSelectUpdateUserErrorCode = () => createSelector(selectGlobal, globalS
 
 const makeSelectIsRequesting = () => createSelector(selectGlobal, globalState => globalState.isRequesting);
 const makeSelectSubusers = () => createSelector(selectGlobal, globalState => globalState.subusers);
+const makeSelectSchemas = () => createSelector(selectGlobal, globalState => globalState.schemas);
 
 export {
     selectGlobal,
@@ -43,5 +44,6 @@ export {
     makeSelectUpdateUserErrorCode,
 
     makeSelectIsRequesting,
-    makeSelectSubusers
+    makeSelectSubusers,
+    makeSelectSchemas
 };

@@ -1,0 +1,159 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import {injectIntl} from 'react-intl';
+
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import indigo from '@material-ui/core/colors/indigo';
+import SearchIcon from '@material-ui/icons/Search';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ExploreIcon from '@material-ui/icons/Explore';
+
+import { makeSelectUser, makeSelectSchemas } from 'containers/App/selectors';
+import { getSchemasRequest, getSubusersRequest } from 'containers/App/actions';
+
+import StyledButtonLink from 'components/StyledButtonLink';
+
+export class SchemasPanel extends React.PureComponent {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            schemasFilter: ``
+        };
+    }
+
+    componentWillMount() {
+        this.props.dispatch(getSubusersRequest({screenName: this.props.user.screenName}));
+        this.props.dispatch(getSchemasRequest());
+    }
+
+    render() {
+
+        console.log(this.props);
+
+        let schemasFilter = false;
+        let schemasComponents = [];
+        if (this.props.schemas) {
+            schemasFilter = (<Grid container spacing={8} alignItems="flex-end">
+                <Grid item>
+                    <SearchIcon />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        fullWidth
+                        value={this.state.schemasFilter}
+                        onChange={(event) => { this.setState({ schemasFilter: event.target.value }) }} />
+                </Grid>
+            </Grid>);
+
+            this.props.schemas.map((item, index) => {
+                if (this.state.schemasFilter === `` || (item.schema.indexOf(this.state.schemasFilter) > -1 || item.schema.indexOf(this.state.schemasFilter) > -1)) {
+                    let databaseName = ``;
+                    if (this.props.user.subuser) {
+                        throw Error(`Check this case`);
+                    } else {
+                        databaseName = this.props.user.screenName;
+                    }
+
+                    let numberOfLayers = (item.count ? item.count : 0);
+                    schemasComponents.push(<ExpansionPanel key={`schema_card_${index}`} defaultExpanded={true}>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography><ExploreIcon/> {item.schema}</Typography>
+                        </ExpansionPanelSummary>
+                        <ExpansionPanelDetails>
+                            <Grid container spacing={8} direction="row">
+                                <Grid item style={{flex: `0 0 50%`}}>
+                                    <Typography>
+                                        <FormattedMessage id="Number of layers"/>: <strong>{numberOfLayers}</strong>
+                                    </Typography>                                    
+                                </Grid>
+                                <Grid item style={{flex: `0 0 50%`, textAlign: `right`}}>
+                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`} style={{marginRight: `10px`}}>
+                                        <Button variant="contained" size="small">
+                                            Vidi
+                                        </Button>
+                                    </StyledButtonLink>
+                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`}>
+                                        <Button color="primary" variant="contained" size="small">
+                                            <SettingsIcon />
+                                        </Button>
+                                    </StyledButtonLink>
+                                </Grid>
+                            </Grid>
+
+
+                        </ExpansionPanelDetails>
+                    </ExpansionPanel>);
+
+                    /*
+                    schemasComponents.push(<Card key={`schema_card_${index}`} style={{marginBottom: `10px`}}>
+                        <CardHeader
+                            avatar={<Avatar aria-label="Recipe" style={{backgroundColor: indigo[500]}}>{item.screenName[0].toUpperCase()}</Avatar>}
+                            action={<div>
+                                <StyledButtonLink to={`/subuser/edit/${item.screenName}`}>
+                                    <IconButton color="primary">
+                                        <EditIcon />
+                                    </IconButton>
+                                </StyledButtonLink>
+                            </div>}
+                            title={item.screenName}
+                            subheader={item.email}
+                            style={{marginBottom: `10px`, paddingBottom: `0px`}}/>
+                    </Card>);
+                    */
+
+                    
+                }
+            });
+        }
+
+        if (schemasComponents.length === 0) {
+            if (this.state.schemasFilter === ``) {
+                schemasComponents = (<p>
+                    <FormattedMessage id="No schemas yet"/>
+                </p>);
+            } else {
+                schemasComponents = (<p>
+                    <FormattedMessage id="No schemas found"/>
+                </p>);
+            }
+        }
+
+        return (<div>
+            <div>
+                <Grid container spacing={8} alignItems="flex-end">
+                    <Grid item>
+                        <Typography variant="h6" color="inherit">
+                            <FormattedMessage id="Schemas"/>
+                        </Typography>
+                    </Grid>
+                    <Grid item>{schemasFilter}</Grid>
+                </Grid>
+            </div>
+            <div>{schemasComponents}</div>
+        </div>);
+    }
+}
+
+const mapStateToProps = createStructuredSelector({
+    user: makeSelectUser(),
+    schemas: makeSelectSchemas()
+});
+
+const withConnect = connect(mapStateToProps);
+
+export default compose(withConnect)(injectIntl(SchemasPanel));

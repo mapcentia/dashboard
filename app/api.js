@@ -15,9 +15,6 @@ const signInCall = (action) => {
 };
 
 const createUserCall = (action) => {
-
-    console.log(`### createUserCall`, action);
-    
     const schema = Joi.object({
         data: Joi.object().keys({
             name: Joi.string().required(),
@@ -58,9 +55,12 @@ const getSubusersCall = (action) => {
     return axios.get(`${config.apiUrl}user/${action.payload.screenName}/subusers`, {withCredentials: true});
 }
 
+const getSchemasCall = () => {
+    return axios.get(`${config.apiUrl}database/schemas`, {withCredentials: true});
+}
+
 const deleteUserCall = (action) => {
     return axios.delete(`${config.apiUrl}user/${action.payload.screenName}`, {withCredentials: true});
 }
 
-
-export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, deleteUserCall};
+export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall};
