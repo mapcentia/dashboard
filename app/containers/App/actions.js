@@ -21,7 +21,7 @@ const normalizeUser = (userData) => {
         email: userData.email,
         passwordExpired: userData.passwordExpired,
         screenName: userData.screen_name,
-        sessionId: userData.session_id,
+        parentDb: userData.parentdb,
         subuser: userData.subuser,
     };
 

@@ -14,6 +14,7 @@ import Grid from '@material-ui/core/Grid';
 import SchemasPanel from 'components/SchemasPanel';
 import SubusersPanel from 'components/SubusersPanel';
 
+import { makeSelectUser } from 'containers/App/selectors';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -22,23 +23,28 @@ export class DashboardPage extends React.PureComponent {
     componentDidMount() { }
 
     render() {
-
-        // @todo Different layout for super and sub users
-        
-        return (
-            <Grid container spacing={24}>
+        if (this.props.user.subuser) {
+            return (<Grid container spacing={24}>
+                <Grid item md={12}>
+                    <SchemasPanel/>
+                </Grid>
+            </Grid>);
+        } else {
+            return (<Grid container spacing={24}>
                 <Grid item md={6}>
                     <SchemasPanel/>
                 </Grid>
                 <Grid item md={6}>
                     <SubusersPanel/>
                 </Grid>
-            </Grid>
-        );
+            </Grid>);
+        }
     }
 }
 
-const mapStateToProps = createStructuredSelector({});
+const mapStateToProps = createStructuredSelector({
+    user: makeSelectUser()
+});
 
 const withConnect = connect(mapStateToProps);
 

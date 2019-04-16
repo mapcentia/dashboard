@@ -23,7 +23,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExploreIcon from '@material-ui/icons/Explore';
 
 import { makeSelectUser, makeSelectSchemas } from 'containers/App/selectors';
-import { getSchemasRequest, getSubusersRequest } from 'containers/App/actions';
+import { getSchemasRequest } from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
 
@@ -37,14 +37,10 @@ export class SchemasPanel extends React.PureComponent {
     }
 
     componentWillMount() {
-        this.props.dispatch(getSubusersRequest({screenName: this.props.user.screenName}));
         this.props.dispatch(getSchemasRequest());
     }
 
     render() {
-
-        console.log(this.props);
-
         let schemasFilter = false;
         let schemasComponents = [];
         if (this.props.schemas) {
@@ -63,8 +59,8 @@ export class SchemasPanel extends React.PureComponent {
             this.props.schemas.map((item, index) => {
                 if (this.state.schemasFilter === `` || (item.schema.indexOf(this.state.schemasFilter) > -1 || item.schema.indexOf(this.state.schemasFilter) > -1)) {
                     let databaseName = ``;
-                    if (this.props.user.subuser) {
-                        throw Error(`Check this case`);
+                    if (this.props.user.parentDb) {
+                        databaseName = this.props.user.parentDb;
                     } else {
                         databaseName = this.props.user.screenName;
                     }
@@ -94,29 +90,8 @@ export class SchemasPanel extends React.PureComponent {
                                     </StyledButtonLink>
                                 </Grid>
                             </Grid>
-
-
                         </ExpansionPanelDetails>
                     </ExpansionPanel>);
-
-                    /*
-                    schemasComponents.push(<Card key={`schema_card_${index}`} style={{marginBottom: `10px`}}>
-                        <CardHeader
-                            avatar={<Avatar aria-label="Recipe" style={{backgroundColor: indigo[500]}}>{item.screenName[0].toUpperCase()}</Avatar>}
-                            action={<div>
-                                <StyledButtonLink to={`/subuser/edit/${item.screenName}`}>
-                                    <IconButton color="primary">
-                                        <EditIcon />
-                                    </IconButton>
-                                </StyledButtonLink>
-                            </div>}
-                            title={item.screenName}
-                            subheader={item.email}
-                            style={{marginBottom: `10px`, paddingBottom: `0px`}}/>
-                    </Card>);
-                    */
-
-                    
                 }
             });
         }
