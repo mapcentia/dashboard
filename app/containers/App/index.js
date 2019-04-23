@@ -14,6 +14,7 @@ import DashboardPage from 'containers/DashboardPage/Loadable';
 import AccountPage from 'containers/AccountPage/Loadable';
 import SubuserPage from 'containers/SubuserPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import ConfigurationPage from 'containers/ConfigurationPage/Loadable';
 
 import PublicLayoutRoute from 'containers/PublicLayoutRoute';
 import ProtectedLayoutRoute from 'containers/ProtectedLayoutRoute';
@@ -34,7 +35,10 @@ class App extends React.Component {
             <Switch>
                 <ProtectedLayoutRoute exact path="/" component={DashboardPage} />
                 <ProtectedLayoutRoute exact path="/account" component={AccountPage} />
+                <ProtectedLayoutRoute exact path="/configuration/add" component={ConfigurationPage} />
+                <ProtectedLayoutRoute exact path="/configuration/edit/:id" component={ConfigurationPage} />
                 <ProtectedLayoutRoute exact path="/subuser/add" component={SubuserPage} />
+                <ProtectedLayoutRoute exact path="/subuser/edit/:id" component={SubuserPage} />
                 <ProtectedLayoutRoute exact path="/subuser/edit/:id" component={SubuserPage} />
                 <PublicLayoutRoute exact path="/sign-in" component={SigninPage} />
                 <PublicLayoutRoute exact path="/sign-up" component={SignupPage} />

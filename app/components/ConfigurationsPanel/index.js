@@ -22,29 +22,29 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExploreIcon from '@material-ui/icons/Explore';
 
-import { makeSelectUser, makeSelectSchemas } from 'containers/App/selectors';
-import { getSchemasRequest } from 'containers/App/actions';
+import { makeSelectUser, makeSelectConfigurations } from 'containers/App/selectors';
+import { getConfigurationsRequest } from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
 
-export class SchemasPanel extends React.PureComponent {
+export class ConfigurationsPanel extends React.PureComponent {
     constructor(props) {
         super(props);
 
         this.state = {
-            schemasFilter: ``
+            configurationsFilter: ``
         };
     }
 
     componentWillMount() {
-        this.props.dispatch(getSchemasRequest());
+        this.props.dispatch(getConfigurationsRequest(this.props.user.screenName));
     }
 
     render() {
-        let schemasFilter = false;
-        let schemasComponents = [];
-        if (this.props.schemas) {
-            schemasFilter = (<Grid container spacing={8} alignItems="flex-end">
+        let configurationsFilter = false;
+        let configurationsComponents = [];
+        if (this.props.configurations) {
+            configurationsFilter = (<Grid container spacing={8} alignItems="flex-end">
                 <Grid item>
                     <SearchIcon />
                 </Grid>
@@ -52,13 +52,13 @@ export class SchemasPanel extends React.PureComponent {
                     <TextField
                         fullWidth
                         placeholder={this.props.intl.formatMessage({id: `Filter`})}
-                        value={this.state.schemasFilter}
-                        onChange={(event) => { this.setState({ schemasFilter: event.target.value }) }} />
+                        value={this.state.configurationsFilter}
+                        onChange={(event) => { this.setState({ configurationsFilter: event.target.value }) }} />
                 </Grid>
             </Grid>);
 
-            this.props.schemas.map((item, index) => {
-                if (this.state.schemasFilter === `` || (item.schema.indexOf(this.state.schemasFilter) > -1 || item.schema.indexOf(this.state.schemasFilter) > -1)) {
+            this.props.configurations.map((item, index) => {
+                if (this.state.configurationsFilter === `` || (item.schema.indexOf(this.state.configurationsFilter) > -1 || item.schema.indexOf(this.state.configurationsFilter) > -1)) {
                     let databaseName = ``;
                     if (this.props.user.parentDb) {
                         databaseName = this.props.user.parentDb;
@@ -67,7 +67,7 @@ export class SchemasPanel extends React.PureComponent {
                     }
 
                     let numberOfLayers = (item.count ? item.count : 0);
-                    schemasComponents.push(<ExpansionPanel key={`schema_card_${index}`} defaultExpanded={false}>
+                    configurationsComponents.push(<ExpansionPanel key={`configuration_card_${index}`} defaultExpanded={true}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
                             <Typography><ExploreIcon/> {item.schema}</Typography>
                         </ExpansionPanelSummary>
@@ -97,34 +97,45 @@ export class SchemasPanel extends React.PureComponent {
             });
         }
 
-        if (schemasComponents.length === 0) {
-            if (this.state.schemasFilter === ``) {
-                schemasComponents = (<p>
-                    <FormattedMessage id="No schemas yet"/>
+        if (configurationsComponents.length === 0) {
+            if (this.state.configurationsFilter === ``) {
+                configurationsComponents = (<p>
+                    <FormattedMessage id="No configurations yet"/>
                 </p>);
             } else {
-                schemasComponents = (<p>
-                    <FormattedMessage id="No schemas found"/>
+                configurationsComponents = (<p>
+                    <FormattedMessage id="No configurations found"/>
                 </p>);
             }
         }
 
         return (<div>
             <div>
-                <Grid container spacing={8} direction="row" justify="flex-end">
-                    <Grid item>{schemasFilter}</Grid>
+                <Grid container spacing={8} direction="row" justify="space-between" alignItems="flex-start">
+                    <Grid item>
+                        <StyledButtonLink to="/configuration/add">
+                            <Button
+                                variant="contained"
+                                size="small"
+                                color="primary"
+                                style={{marginLeft: `10px`}}>
+                                <FormattedMessage id="Add" />
+                            </Button>
+                        </StyledButtonLink>
+                    </Grid>
+                    <Grid item>{configurationsFilter}</Grid>
                 </Grid>
             </div>
-            <div>{schemasComponents}</div>
+            <div>{configurationsComponents}</div>
         </div>);
     }
 }
 
 const mapStateToProps = createStructuredSelector({
     user: makeSelectUser(),
-    schemas: makeSelectSchemas()
+    configurations: makeSelectConfigurations()
 });
 
 const withConnect = connect(mapStateToProps);
 
-export default compose(withConnect)(injectIntl(SchemasPanel));
+export default compose(withConnect)(injectIntl(ConfigurationsPanel));

@@ -6,14 +6,17 @@ import { checkAuthorizationSuccess, checkAuthorizationFailure,
     updateUserSuccess, updateUserFailure, updateUserPasswordSuccess,
     deleteUserSuccess, deleteUserFailure,
     getSubusersRequest, getSubusersSuccess, getSubusersFailure,
-    getSchemasRequest, getSchemasSuccess, getSchemasFailure } from 'containers/App/actions';
+    getSchemasRequest, getSchemasSuccess, getSchemasFailure,
+    getConfigurationsSuccess, getConfigurationsFailure } from 'containers/App/actions';
 
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
     SIGN_IN_REQUEST, SIGN_OUT,
     CREATE_USER_REQUEST, UPDATE_USER_REQUEST, DELETE_USER_REQUEST,
+    GET_CONFIGURATIONS_REQUEST, CREATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_REQUEST,
     GET_SUBUSERS_REQUEST, GET_SCHEMAS_REQUEST} from 'containers/App/constants';
 
-import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall} from 'api';
+import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall,
+    getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall} from 'api';
 
 export function* checkAuthorizationGenerator() {
     try {
@@ -113,6 +116,15 @@ export function* getSchemasGenerator(action) {
     }
 }
 
+export function* getConfigurationsGenerator(action) {
+    const response = yield call(getConfigurationsCall, action);
+    try {
+        yield put(getConfigurationsSuccess(response.data.data));
+    } catch(err) {
+        yield put(getConfigurationsFailure());
+    }
+}
+
 export function* forceUserUpdateGenerator(action) {
     if (action.payload.passwordExpired) {
         yield put(push(`/account`));
@@ -129,5 +141,6 @@ export default function* checkAuthorization() {
     yield takeLatest(CHECK_AUTHORIZATION_SUCCESS, forceUserUpdateGenerator);
     yield takeLatest(GET_SUBUSERS_REQUEST, getSubusersGenerator);
     yield takeLatest(GET_SCHEMAS_REQUEST, getSchemasGenerator);
+    yield takeLatest(GET_CONFIGURATIONS_REQUEST, getConfigurationsGenerator);
 }
 

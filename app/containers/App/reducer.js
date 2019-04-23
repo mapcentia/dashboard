@@ -6,6 +6,7 @@ import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHE
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
     GET_SCHEMAS_REQUEST, GET_SCHEMAS_SUCCESS, GET_SCHEMAS_FAILURE,
+    GET_CONFIGURATIONS_REQUEST, GET_CONFIGURATIONS_SUCCESS, GET_CONFIGURATIONS_FAILURE,
     CREATE_UPDATE_USER_RESET } from 'containers/App/constants';
 
 const initialState = fromJS({
@@ -32,7 +33,8 @@ const initialState = fromJS({
     updateUserErrorCode: ``,
 
     subusers: [],
-    schemas: []
+    schemas: [],
+    configurations: [],
 });
 
 function appReducer(state = initialState, action) {
@@ -178,6 +180,19 @@ function appReducer(state = initialState, action) {
                 schemas: action.payload
             });
         case GET_SCHEMAS_FAILURE:
+            return Object.assign({}, state, {
+                isRequesting: false,
+            });
+        case GET_CONFIGURATIONS_REQUEST:
+            return Object.assign({}, state, {
+                isRequesting: true,
+            });
+        case GET_CONFIGURATIONS_SUCCESS:
+            return Object.assign({}, state, {
+                isRequesting: false,
+                configurations: action.payload
+            });
+        case GET_CONFIGURATIONS_FAILURE:
             return Object.assign({}, state, {
                 isRequesting: false,
             });

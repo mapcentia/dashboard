@@ -59,8 +59,12 @@ const getSchemasCall = () => {
     return axios.get(`${config.apiUrl}database/schemas`, {withCredentials: true});
 }
 
+const getConfigurationsCall = (action) => {
+    return axios.get(`${config.apiUrl}configuration/${action.payload}`, {withCredentials: true});
+}
+
 const deleteUserCall = (action) => {
     return axios.delete(`${config.apiUrl}user/${action.payload.screenName}`, {withCredentials: true});
 }
 
-export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall};
+export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall};

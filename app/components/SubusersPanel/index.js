@@ -105,9 +105,6 @@ export class SubusersPanel extends React.PureComponent {
                     <Grid item>
                         <Typography variant="h6" color="inherit">
                             <FormattedMessage id="Subusers"/>
-
-
-
                             <StyledButtonLink to="/subuser/add">
                                 <Button
                                     variant="contained"
