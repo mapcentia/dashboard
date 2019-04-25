@@ -115,7 +115,7 @@ export class SchemasPanel extends React.PureComponent {
                     <Grid item>{schemasFilter}</Grid>
                 </Grid>
             </div>
-            <div>{schemasComponents}</div>
+            <div style={{paddingTop: `10px`}}>{schemasComponents}</div>
         </div>);
     }
 }

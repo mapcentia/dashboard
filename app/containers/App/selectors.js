@@ -25,6 +25,14 @@ const makeSelectSubusers = () => createSelector(selectGlobal, globalState => glo
 const makeSelectSchemas = () => createSelector(selectGlobal, globalState => globalState.schemas);
 const makeSelectConfigurations = () => createSelector(selectGlobal, globalState => globalState.configurations);
 
+const makeSelectCreateConfigurationLoading = () => createSelector(selectGlobal, globalState => globalState.createConfiguration);
+const makeSelectCreateConfigurationSuccess = () => createSelector(selectGlobal, globalState => globalState.createConfigurationSuccess);
+const makeSelectCreateConfigurationError = () => createSelector(selectGlobal, globalState => globalState.createConfigurationError);
+
+const makeSelectUpdateConfigurationLoading = () => createSelector(selectGlobal, globalState => globalState.updateConfiguration);
+const makeSelectUpdateConfigurationSuccess = () => createSelector(selectGlobal, globalState => globalState.updateConfigurationSuccess);
+const makeSelectUpdateConfigurationError = () => createSelector(selectGlobal, globalState => globalState.updateConfigurationError);
+
 export {
     selectGlobal,
     makeSelectIsAuthenticating,
@@ -47,5 +55,14 @@ export {
     makeSelectIsRequesting,
     makeSelectSubusers,
     makeSelectSchemas,
-    makeSelectConfigurations
+    makeSelectConfigurations,
+
+    makeSelectCreateConfigurationLoading,
+    makeSelectCreateConfigurationSuccess,
+    makeSelectCreateConfigurationError,
+
+    makeSelectUpdateConfigurationLoading,
+    makeSelectUpdateConfigurationSuccess,
+    makeSelectUpdateConfigurationError,
+
 };

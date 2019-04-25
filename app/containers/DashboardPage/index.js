@@ -21,8 +21,6 @@ import SchemasPanel from 'components/SchemasPanel';
 import ConfigurationsPanel from 'components/ConfigurationsPanel';
 import SubusersPanel from 'components/SubusersPanel';
 
-import StyledButtonLink from 'components/StyledButtonLink';
-
 import { makeSelectUser } from 'containers/App/selectors';
 import reducer from './reducer';
 import saga from './saga';

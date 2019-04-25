@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import {injectIntl} from 'react-intl';
+import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -20,10 +21,11 @@ import indigo from '@material-ui/core/colors/indigo';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ExploreIcon from '@material-ui/icons/Explore';
+import LinkIcon from '@material-ui/icons/Link';
 
+import config from 'config';
 import { makeSelectUser, makeSelectConfigurations } from 'containers/App/selectors';
-import { getConfigurationsRequest } from 'containers/App/actions';
+import { getConfigurationsRequest, deleteConfigurationRequest } from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
 
@@ -34,10 +36,21 @@ export class ConfigurationsPanel extends React.PureComponent {
         this.state = {
             configurationsFilter: ``
         };
+
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     componentWillMount() {
-        this.props.dispatch(getConfigurationsRequest(this.props.user.screenName));
+        this.props.dispatch(getConfigurationsRequest({ userId: this.props.user.screenName}));
+    }
+
+    handleDelete(key, name) {
+        if (confirm(this.props.intl.formatMessage({id: `Delete`}) + ` ${name}?`)) {
+            this.props.dispatch(deleteConfigurationRequest({
+                userId: this.props.user.screenName,
+                configurationId: key
+            }));
+        }
     }
 
     render() {
@@ -58,39 +71,41 @@ export class ConfigurationsPanel extends React.PureComponent {
             </Grid>);
 
             this.props.configurations.map((item, index) => {
-                if (this.state.configurationsFilter === `` || (item.schema.indexOf(this.state.configurationsFilter) > -1 || item.schema.indexOf(this.state.configurationsFilter) > -1)) {
-                    let databaseName = ``;
-                    if (this.props.user.parentDb) {
-                        databaseName = this.props.user.parentDb;
-                    } else {
-                        databaseName = this.props.user.screenName;
-                    }
+                let parsedData = JSON.parse(item.value);
 
-                    let numberOfLayers = (item.count ? item.count : 0);
-                    configurationsComponents.push(<ExpansionPanel key={`configuration_card_${index}`} defaultExpanded={true}>
+                if (this.state.configurationsFilter === `` || (parsedData.name.indexOf(this.state.configurationsFilter) > -1 || parsedData.name.indexOf(this.state.configurationsFilter) > -1)) {
+                    let url = config.apiUrl + `configuration/${this.props.user.screenName}/${item.key}.json`;
+                    configurationsComponents.push(<ExpansionPanel key={`configuration_card_${index}`} defaultExpanded={false}>
                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-                            <Typography><ExploreIcon/> {item.schema}</Typography>
+                            <Typography><LinkIcon/> {parsedData.name}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
-                            <Grid container spacing={8} direction="row">
-                                <Grid item style={{flex: `0 0 50%`}}>
-                                    <Typography>
-                                        <FormattedMessage id="Number of layers"/>: <strong>{numberOfLayers}</strong>
-                                    </Typography>                                    
-                                </Grid>
-                                <Grid item style={{flex: `0 0 50%`, textAlign: `right`}}>
-                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`} style={{marginRight: `10px`}}>
-                                        <Button variant="contained" size="small">
-                                            Vidi
+                            <div style={{width: `100%`}}>
+                                <div>
+                                    <TextField
+                                        id="configuration-link"
+                                        label="Link"
+                                        fullWidth={true}
+                                        value={url}
+                                        margin="normal"
+                                        style={{marginTop: `0px`}}/>
+                                </div>
+                                <div style={{textAlign: `right`}}>
+                                    <CopyToClipboard text={url}>
+                                        <Button variant="contained" size="small" style={{marginRight: `10px`}}>
+                                            <FormattedMessage id="Copy link"/>
                                         </Button>
-                                    </StyledButtonLink>
-                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`}>
+                                    </CopyToClipboard>
+                                    <StyledButtonLink to={`/configuration/edit/${item.key}`} style={{marginRight: `10px`}}>
                                         <Button color="primary" variant="contained" size="small">
-                                            <SettingsIcon />
+                                            <FormattedMessage id="Edit"/>
                                         </Button>
                                     </StyledButtonLink>
-                                </Grid>
-                            </Grid>
+                                        <Button color="secondary" variant="contained" size="small" onClick={() => { this.handleDelete(item.key, parsedData.name)}}>
+                                            <FormattedMessage id="Delete"/>
+                                        </Button>
+                                </div>
+                            </div>
                         </ExpansionPanelDetails>
                     </ExpansionPanel>);
                 }
@@ -126,7 +141,7 @@ export class ConfigurationsPanel extends React.PureComponent {
                     <Grid item>{configurationsFilter}</Grid>
                 </Grid>
             </div>
-            <div>{configurationsComponents}</div>
+            <div style={{paddingTop: `10px`}}>{configurationsComponents}</div>
         </div>);
     }
 }

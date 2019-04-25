@@ -7,7 +7,10 @@ import { checkAuthorizationSuccess, checkAuthorizationFailure,
     deleteUserSuccess, deleteUserFailure,
     getSubusersRequest, getSubusersSuccess, getSubusersFailure,
     getSchemasRequest, getSchemasSuccess, getSchemasFailure,
-    getConfigurationsSuccess, getConfigurationsFailure } from 'containers/App/actions';
+    getConfigurationsSuccess, getConfigurationsFailure,
+    createConfigurationSuccess, createConfigurationFailure,
+    updateConfigurationSuccess, updateConfigurationFailure,
+    deleteConfigurationSuccess, deleteConfigurationFailure, getConfigurationsRequest } from 'containers/App/actions';
 
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
     SIGN_IN_REQUEST, SIGN_OUT,
@@ -16,7 +19,8 @@ import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SCHEMAS_REQUEST} from 'containers/App/constants';
 
 import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall,
-    getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall} from 'api';
+    getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
+    createConfigurationCall, updateConfigurationCall, deleteConfigurationCall} from 'api';
 
 export function* checkAuthorizationGenerator() {
     try {
@@ -131,6 +135,34 @@ export function* forceUserUpdateGenerator(action) {
     }
 }
 
+export function* createConfigurationGenerator(action) {
+    const response = yield call(createConfigurationCall, action);
+    try {
+        yield put(createConfigurationSuccess(response.data.data));
+    } catch(err) {
+        yield put(createConfigurationFailure());
+    }
+}
+
+export function* updateConfigurationGenerator(action) {
+    const response = yield call(updateConfigurationCall, action);
+    try {
+        yield put(updateConfigurationSuccess(response.data.data));
+    } catch(err) {
+        yield put(updateConfigurationFailure());
+    }
+}
+
+export function* deleteConfigurationGenerator(action) {
+    const response = yield call(deleteConfigurationCall, action);
+    try {
+        yield put(deleteConfigurationSuccess(response.data.data));
+        yield put(getConfigurationsRequest(action.payload));
+    } catch(err) {
+        yield put(deleteConfigurationFailure());
+    }
+}
+
 export default function* checkAuthorization() {
     yield takeLatest(CHECK_AUTHORIZATION_REQUEST, checkAuthorizationGenerator);
     yield takeLatest(SIGN_IN_REQUEST, signInGenerator);
@@ -142,5 +174,8 @@ export default function* checkAuthorization() {
     yield takeLatest(GET_SUBUSERS_REQUEST, getSubusersGenerator);
     yield takeLatest(GET_SCHEMAS_REQUEST, getSchemasGenerator);
     yield takeLatest(GET_CONFIGURATIONS_REQUEST, getConfigurationsGenerator);
+    yield takeLatest(CREATE_CONFIGURATION_REQUEST, createConfigurationGenerator);
+    yield takeLatest(UPDATE_CONFIGURATION_REQUEST, updateConfigurationGenerator);
+    yield takeLatest(DELETE_CONFIGURATION_REQUEST, deleteConfigurationGenerator);
 }
 

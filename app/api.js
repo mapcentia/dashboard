@@ -60,11 +60,33 @@ const getSchemasCall = () => {
 }
 
 const getConfigurationsCall = (action) => {
-    return axios.get(`${config.apiUrl}configuration/${action.payload}`, {withCredentials: true});
+    return axios.get(`${config.apiUrl}configuration/${action.payload.userId}`, {withCredentials: true});
 }
 
 const deleteUserCall = (action) => {
     return axios.delete(`${config.apiUrl}user/${action.payload.screenName}`, {withCredentials: true});
 }
 
-export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall};
+const createConfigurationCall = (action) => {
+
+    console.log(`### createConfigurationCall`, action);
+
+    return axios.post(`${config.apiUrl}configuration/${action.payload.userId}`, action.payload.data, {withCredentials: true});
+}
+
+const updateConfigurationCall = (action) => {
+
+    console.log(`### updateConfigurationCall`, action);
+
+    return axios.put(`${config.apiUrl}configuration/${action.payload.userId}`, action.payload.data, {withCredentials: true});
+}
+
+const deleteConfigurationCall = (action) => {
+
+    console.log(`### deleteConfigurationCall`, action);
+
+    return axios.delete(`${config.apiUrl}configuration/${action.payload.userId}/${action.payload.configurationId}`, {withCredentials: true});
+}
+
+export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
+    createConfigurationCall, updateConfigurationCall, deleteConfigurationCall};
