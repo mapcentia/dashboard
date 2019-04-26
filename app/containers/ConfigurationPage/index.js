@@ -99,6 +99,7 @@ const placeholder = {
 const initialState = {
     configurations: [],
     key: false,
+    configurationWasSet: false,
     name: ``,
     description: ``,
     body: placeholder,
@@ -126,15 +127,16 @@ class ConfigurationPage extends React.Component {
     }
 
     static getDerivedStateFromProps(newProps, currentState) {
-        if (newProps.configurations && newProps.configurations.length > 0) {
+        if (newProps.configurations && currentState.configurationWasSet === false && (newProps.configurations.length > 0)) {
             let newState = { configurations: newProps.configurations };
             newProps.configurations.map(item => {
                 if (currentState.key === item.key) {
                     let parsedData = JSON.parse(item.value);
                     newState.name = parsedData.name;
                     newState.description = parsedData.description;
-                    newState.body = parsedData.body;
+                    newState.body = JSON.parse(parsedData.body);
                     newState.published = parsedData.published;
+                    newState.configurationWasSet = true;
                 }
             });
 
@@ -190,7 +192,6 @@ class ConfigurationPage extends React.Component {
         }
 
         let localPlaceholder = (this.state.key ? this.state.body : placeholder);
-
         let formPanel = (<Grid item xs>
             <Grid container>
                 <Grid item>

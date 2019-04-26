@@ -5,7 +5,6 @@ import { Redirect } from 'react-router';
 import { Route } from 'react-router-dom';
 import { withRouter } from "react-router";
 import { FormattedMessage } from 'react-intl';
-import styled from 'styled-components';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -24,16 +23,7 @@ import LoadingOverlay from 'components/LoadingOverlay';
 import AppLoadingOverlay from 'components/AppLoadingOverlay';
 import { makeSelectIsAuthenticating, makeSelectIsAuthenticated, makeSelectUser } from 'containers/App/selectors';
 
-const MainContentWrapper = styled.div`
-    margin: 0 auto;
-    padding: 10px 10px 10px;
-
-    @media (min-width: 948px) {
-        width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-`;
+import MainContentWrapper from 'components/MainContentWrapper';
 
 class ProtectedLayout extends React.Component {
     constructor(props) {
@@ -56,43 +46,41 @@ class ProtectedLayout extends React.Component {
                   </Badge>);
                 }
 
-                return (
+                return (<div>
+                    <LoadingOverlay/>
                     <div>
-                        <LoadingOverlay/>
-                        <div>
-                            <AppBar position="static">
-                                <Toolbar>
-                                    <Grid container direction="row" justify="space-between" alignItems="flex-start">
-                                        <Grid item>
-                                            <StyledButtonLink to="/">
-                                                <Typography variant="h6" color="inherit">
-                                                    <FormattedMessage id="Geocloud Dashboard" />
-                                                </Typography>
-                                            </StyledButtonLink>
-                                        </Grid>
-                                        <Grid item>
-                                            <div style={{display: `inline-block`, paddingRight: `20px`}}>
-                                                {userButton}
-                                            </div>
-                                            <div style={{display: `inline-block`}}>
-                                                <Button color="inherit" onClick={this.props.onSignOut}>
-                                                    <FormattedMessage id="Sign out" />
-                                                </Button>
-                                            </div>
-                                        </Grid>
+                        <AppBar position="static">
+                            <Toolbar>
+                                <Grid container direction="row" justify="space-between" alignItems="flex-start">
+                                    <Grid item>
+                                        <StyledButtonLink to="/">
+                                            <Typography variant="h6" color="inherit">
+                                                <FormattedMessage id="Geocloud Dashboard" />
+                                            </Typography>
+                                        </StyledButtonLink>
                                     </Grid>
-                                </Toolbar>
-                            </AppBar>
-                        </div>
-                        <MainContentWrapper>
-                            <Card>
-                                <CardContent>
-                                    {children}
-                                </CardContent>
-                            </Card>
-                        </MainContentWrapper>
+                                    <Grid item>
+                                        <div style={{display: `inline-block`, paddingRight: `20px`}}>
+                                            {userButton}
+                                        </div>
+                                        <div style={{display: `inline-block`}}>
+                                            <Button color="inherit" onClick={this.props.onSignOut}>
+                                                <FormattedMessage id="Sign out" />
+                                            </Button>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                            </Toolbar>
+                        </AppBar>
                     </div>
-                );
+                    <MainContentWrapper>
+                        <Card>
+                            <CardContent>
+                                {children}
+                            </CardContent>
+                        </Card>
+                    </MainContentWrapper>
+                </div>);
             } else {
                 return (<Redirect to="/sign-in"/>);
             }

@@ -5,12 +5,13 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { checkAuthorizationRequest } from 'containers/App/actions';
-import { withRouter } from "react-router";
+import { withRouter, Route } from "react-router";
 
 import Footer from 'components/Footer/Loadable';
 import SigninPage from 'containers/SigninPage/Loadable';
 import SignupPage from 'containers/SignupPage/Loadable';
 import DashboardPage from 'containers/DashboardPage/Loadable';
+import PublishedConfigurationsPage from 'containers/PublishedConfigurationsPage/Loadable';
 import AccountPage from 'containers/AccountPage/Loadable';
 import SubuserPage from 'containers/SubuserPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
@@ -34,6 +35,7 @@ class App extends React.Component {
         return (<div>
             <Switch>
                 <ProtectedLayoutRoute exact path="/" component={DashboardPage} />
+                <Route exact path="/configuration/published/:id" component={PublishedConfigurationsPage} />
                 <ProtectedLayoutRoute exact path="/account" component={AccountPage} />
                 <ProtectedLayoutRoute exact path="/configuration/add" component={ConfigurationPage} />
                 <ProtectedLayoutRoute exact path="/configuration/edit/:id" component={ConfigurationPage} />
