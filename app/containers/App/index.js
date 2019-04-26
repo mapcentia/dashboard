@@ -39,7 +39,6 @@ class App extends React.Component {
                 <ProtectedLayoutRoute exact path="/configuration/edit/:id" component={ConfigurationPage} />
                 <ProtectedLayoutRoute exact path="/subuser/add" component={SubuserPage} />
                 <ProtectedLayoutRoute exact path="/subuser/edit/:id" component={SubuserPage} />
-                <ProtectedLayoutRoute exact path="/subuser/edit/:id" component={SubuserPage} />
                 <PublicLayoutRoute exact path="/sign-in" component={SigninPage} />
                 <PublicLayoutRoute exact path="/sign-up" component={SignupPage} />
                 <PublicLayoutRoute path="" component={NotFoundPage} />

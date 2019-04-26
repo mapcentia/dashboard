@@ -7,8 +7,8 @@ import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHE
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
     GET_SCHEMAS_REQUEST, GET_SCHEMAS_SUCCESS, GET_SCHEMAS_FAILURE,
     GET_CONFIGURATIONS_REQUEST, GET_CONFIGURATIONS_SUCCESS, GET_CONFIGURATIONS_FAILURE,
-    CREATE_CONFIGURATION_RESET, CREATE_CONFIGURATION_REQUEST, CREATE_CONFIGURATION_SUCCESS, CREATE_CONFIGURATION_FAILURE,
-    UPDATE_CONFIGURATION_RESET, UPDATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_SUCCESS, UPDATE_CONFIGURATION_FAILURE,
+    CREATE_UPDATE_CONFIGURATION_RESET, CREATE_CONFIGURATION_REQUEST, CREATE_CONFIGURATION_SUCCESS, CREATE_CONFIGURATION_FAILURE,
+    UPDATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_SUCCESS, UPDATE_CONFIGURATION_FAILURE,
     DELETE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_SUCCESS, DELETE_CONFIGURATION_FAILURE,
     CREATE_UPDATE_USER_RESET } from 'containers/App/constants';
 
@@ -50,7 +50,7 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
     
-    console.log(`### action`, action);
+    //console.log(`### action`, action);
 
     switch (action.type) {
         case SIGN_OUT:
@@ -208,16 +208,17 @@ function appReducer(state = initialState, action) {
                 isRequesting: false,
             });
 
-
-
-
-        case CREATE_CONFIGURATION_RESET:
+        case CREATE_UPDATE_CONFIGURATION_RESET:
             return Object.assign({}, state, {
                 isRequesting: false,
                 createConfiguration: false,
                 createConfigurationSuccess: false,
                 createConfigurationError: false,
+                updateConfiguration: false,
+                updateConfigurationSuccess: false,
+                updateConfigurationError: false,
             });
+
         case CREATE_CONFIGURATION_REQUEST:
             return Object.assign({}, state, {
                 isRequesting: true,
@@ -240,10 +241,27 @@ function appReducer(state = initialState, action) {
                 createConfigurationError: true,
             });
 
-
-
-
-
+        case UPDATE_CONFIGURATION_REQUEST:
+            return Object.assign({}, state, {
+                isRequesting: true,
+                updateConfiguration: true,
+                updateConfigurationSuccess: false,
+                updateConfigurationError: false,
+            });
+        case UPDATE_CONFIGURATION_SUCCESS:
+            return Object.assign({}, state, {
+                isRequesting: false,
+                updateConfiguration: false,
+                updateConfigurationSuccess: true,
+                updateConfigurationError: false,
+            });
+        case UPDATE_CONFIGURATION_FAILURE:
+            return Object.assign({}, state, {
+                isRequesting: false,
+                updateConfiguration: false,
+                updateConfigurationSuccess: false,
+                updateConfigurationError: true,
+            });
 
         default:
             return state;

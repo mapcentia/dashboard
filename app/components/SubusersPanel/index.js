@@ -46,9 +46,6 @@ export class SubusersPanel extends React.PureComponent {
     }
 
     render() {
-
-        console.log(this.props);
-
         let subuserFilter = false;
         let subuserComponents = [];
         if (this.props.subusers) {

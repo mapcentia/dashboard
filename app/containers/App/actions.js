@@ -8,8 +8,8 @@ import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, SIGN_OUT,
     DELETE_USER_REQUEST, DELETE_USER_SUCCESS, DELETE_USER_FAILURE,
     GET_CONFIGURATIONS_REQUEST, GET_CONFIGURATIONS_SUCCESS, GET_CONFIGURATIONS_FAILURE,
     GET_CONFIGURATION_REQUEST, GET_CONFIGURATION_SUCCESS, GET_CONFIGURATION_FAILURE,
-    CREATE_CONFIGURATION_RESET, CREATE_CONFIGURATION_REQUEST, CREATE_CONFIGURATION_SUCCESS, CREATE_CONFIGURATION_FAILURE,
-    UPDATE_CONFIGURATION_RESET, UPDATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_SUCCESS, UPDATE_CONFIGURATION_FAILURE,
+    CREATE_UPDATE_CONFIGURATION_RESET, CREATE_CONFIGURATION_REQUEST, CREATE_CONFIGURATION_SUCCESS, CREATE_CONFIGURATION_FAILURE,
+    UPDATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_SUCCESS, UPDATE_CONFIGURATION_FAILURE,
     DELETE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_SUCCESS, DELETE_CONFIGURATION_FAILURE,
     CREATE_UPDATE_USER_RESET} from 'containers/App/constants';
 
@@ -103,14 +103,15 @@ export function getConfigurationRequest(payload) { return { type: GET_CONFIGURAT
 export function getConfigurationSuccess(payload) { return { type: GET_CONFIGURATION_SUCCESS, payload }; }
 export function getConfigurationFailure() { return { type: GET_CONFIGURATION_FAILURE }; }
 
+// Resetting create / update form
+export function createUpdateConfigurationReset(payload) { return { type: CREATE_UPDATE_CONFIGURATION_RESET, payload }; }
+
 // Create configuration
-export function createConfigurationReset(payload) { return { type: CREATE_CONFIGURATION_RESET, payload }; }
 export function createConfigurationRequest(payload) { return { type: CREATE_CONFIGURATION_REQUEST, payload }; }
 export function createConfigurationSuccess(payload) { return { type: CREATE_CONFIGURATION_SUCCESS, payload }; }
 export function createConfigurationFailure() { return { type: CREATE_CONFIGURATION_FAILURE }; }
 
 // Update configuration
-export function updateConfigurationReset(payload) { return { type: UPDATE_CONFIGURATION_RESET, payload }; }
 export function updateConfigurationRequest(payload) { return { type: UPDATE_CONFIGURATION_REQUEST, payload }; }
 export function updateConfigurationSuccess(payload) { return { type: UPDATE_CONFIGURATION_SUCCESS, payload }; }
 export function updateConfigurationFailure() { return { type: UPDATE_CONFIGURATION_FAILURE }; }

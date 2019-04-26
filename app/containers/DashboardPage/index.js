@@ -1,18 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import SwipeableViews from 'react-swipeable-views';
-import { FormattedMessage } from 'react-intl';
 
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
@@ -30,7 +26,15 @@ export class DashboardPage extends React.PureComponent {
     state = {
         activeTab: 0,
     };
-    
+
+    componentWillMount() {
+        if (window.location.hash === `#configuration`) {
+            this.setState({
+                activeTab: 1
+            });
+        }
+    }
+
     handleChangeActiveTab = (event, activeTab) => {
         this.setState({ activeTab });
     };
