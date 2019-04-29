@@ -42,7 +42,7 @@ class SigninForm extends React.Component {
                         value={this.state.password} onChange={(event) => { this.setState({ password: event.target.value }) }}/>
                 </FormControl>
             </div>
-            <Button type="button" onClick={() => { this.props.onSubmit(this.state.user, this.state.password)}} fullWidth variant="contained" disabled={this.props.disabled || this.state.user.length < MIN_LENGTH || this.state.password.length < MIN_LENGTH} color="primary">
+            <Button type="submit" onClick={() => { this.props.onSubmit(this.state.user, this.state.password)}} fullWidth variant="contained" disabled={this.props.disabled || this.state.user.length < MIN_LENGTH || this.state.password.length < MIN_LENGTH} color="primary">
                 <FormattedMessage id={`Sign in`} />
             </Button>
         </form>);

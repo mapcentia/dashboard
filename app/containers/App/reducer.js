@@ -2,7 +2,7 @@ import { fromJS } from 'immutable';
 
 import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
     SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE,
-    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
+    CREATE_USER_RESET, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
     GET_SCHEMAS_REQUEST, GET_SCHEMAS_SUCCESS, GET_SCHEMAS_FAILURE,
@@ -100,6 +100,16 @@ function appReducer(state = initialState, action) {
                 signingInSuccess: false,
                 signingInError: true,
                 user: false
+            });
+
+        case CREATE_USER_RESET:
+            return Object.assign({}, state, {
+                isRequesting: false,
+                createUser: false,
+                createUserSuccess: false,
+                createUserSuccessUserName: false,
+                createUserError: false,
+                createUserErrorCode: ``
             });
         case CREATE_USER_REQUEST:
             return Object.assign({}, state, {

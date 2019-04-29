@@ -9,7 +9,7 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 
 import { makeSelectCreateUser, makeSelectCreateUserSuccess, makeSelectCreateUserSuccessUserName, makeSelectCreateUserError, makeSelectCreateUserErrorCode } from 'containers/App/selectors';
-import { createUserRequest } from 'containers/App/actions';
+import { createUserReset, createUserRequest } from 'containers/App/actions';
 import SignupForm from './SignupForm';
 import PublicFormsWrapper from 'components/PublicFormsWrapper';
 import StyledLink from 'components/StyledLink';
@@ -26,6 +26,10 @@ const SuccessWrapper = styled.div`
 class SignupPage extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentWillMount() {
+        this.props.dispatch(createUserReset());
     }
 
     render() {

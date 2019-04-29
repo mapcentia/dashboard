@@ -1,7 +1,7 @@
 import Cookies from 'universal-cookie';
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE } from 'containers/App/constants';
 import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, SIGN_OUT,
-    CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
+    CREATE_USER_RESET, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
     GET_SCHEMAS_REQUEST, GET_SCHEMAS_SUCCESS, GET_SCHEMAS_FAILURE,
@@ -37,6 +37,7 @@ const normalizeUser = (userData) => {
 export function createUpdateUserReset() { return { type: CREATE_UPDATE_USER_RESET }; }
 
 // Create user
+export function createUserReset() { return { type: CREATE_USER_RESET }; }
 export function createUserRequest(payload) { return { type: CREATE_USER_REQUEST, payload }; }
 export function createUserSuccess(payload) { return { type: CREATE_USER_SUCCESS, payload}; }
 export function createUserFailure(payload = false) { return { type: CREATE_USER_FAILURE, payload }; }
