@@ -1,31 +1,40 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import {injectIntl} from 'react-intl';
 
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import indigo from '@material-ui/core/colors/indigo';
+import LaunchIcon from '@material-ui/icons/Launch';
 import SearchIcon from '@material-ui/icons/Search';
 import SettingsIcon from '@material-ui/icons/Settings';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExploreIcon from '@material-ui/icons/Explore';
 
+import config from 'config';
+
 import { makeSelectUser, makeSelectSchemas } from 'containers/App/selectors';
 import { getSchemasRequest } from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
+
+const StyledLink = styled.a`
+    text-decoration: none;
+    color: white;
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: white;
+    }
+`;
 
 export class SchemasPanel extends React.PureComponent {
     constructor(props) {
@@ -79,13 +88,14 @@ export class SchemasPanel extends React.PureComponent {
                                     </Typography>                                    
                                 </Grid>
                                 <Grid item style={{flex: `0 0 50%`, textAlign: `right`}}>
-                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`} style={{marginRight: `10px`}}>
-                                        <Button variant="contained" size="small">
-                                            Vidi
-                                        </Button>
-                                    </StyledButtonLink>
-                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`}>
+                                    <StyledLink href={`${config.vidiUrl}app/${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
                                         <Button color="primary" variant="contained" size="small">
+                                            <LaunchIcon/> Vidi
+                                        </Button>
+                                    </StyledLink>
+
+                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`}>
+                                        <Button variant="contained" size="small">
                                             <SettingsIcon />
                                         </Button>
                                     </StyledButtonLink>
