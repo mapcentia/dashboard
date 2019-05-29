@@ -40,7 +40,7 @@ const createUserCall = (action) => {
 
 const updateUserCall = (action) => {
     let data = {};
-    if (action.payload.currentPassword) {
+    if (action.payload.data && action.payload.data.oldPassword) {
         data.currentPassword = action.payload.data.oldPassword;
         data.password = action.payload.data.newPassword;
     } else {
