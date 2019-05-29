@@ -48,7 +48,12 @@ const updateUserCall = (action) => {
         if (action.payload.data.usergroup) data.usergroup = (action.payload.data.usergroup === `null` ? `` : action.payload.data.usergroup);
     }
 
-    return axios.put(`${config.apiUrl}user/${action.payload.screenName}`, data, {withCredentials: true});
+    return axios.put(`${config.apiUrl}user/${action.payload.screenName}`, data, {
+        withCredentials: true,
+        validateStatus: (status) => {
+            return (status == 200 || status === 403);
+        }
+    });
 };
 
 const getSubusersCall = (action) => {

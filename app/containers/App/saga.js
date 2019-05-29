@@ -27,7 +27,6 @@ export function* checkAuthorizationGenerator() {
         const response = yield call(checkAuthorizationCall);
         yield put(checkAuthorizationSuccess(response.data.data));
     } catch (err) {
-        console.log(err);
         yield put(checkAuthorizationFailure());
     }
 }
@@ -70,14 +69,16 @@ export function* signOutGenerator() {
 }
 
 export function* updateUserGenerator(action) {
-    const response = yield call(updateUserCall, action);
     try {
+        const response = yield call(updateUserCall, action);
         if (response.status === 200) {
             yield put(updateUserSuccess());
             if (action.payload.data.onSuccess) action.payload.data.onSuccess();
             if (action.payload.data && action.payload.data.oldPassword && action.payload.data.newPassword) {
                 yield put(updateUserPasswordSuccess());
             }
+        } else if (response.status === 403) {
+            yield put(updateUserFailure(response.data.errorCode));
         } else {
             if (response.data && response.data.errorCode) {
                 yield put(updateUserFailure(response.data.errorCode));
@@ -86,7 +87,6 @@ export function* updateUserGenerator(action) {
             }
         }
     } catch(err) {
-        console.error(err);
         yield put(updateUserFailure());
     }
 }

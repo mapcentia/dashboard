@@ -49,9 +49,6 @@ const initialState = fromJS({
 });
 
 function appReducer(state = initialState, action) {
-    
-    //console.log(`### action`, action);
-
     switch (action.type) {
         case SIGN_OUT:
             return Object.assign({}, state, {

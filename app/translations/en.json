@@ -73,6 +73,7 @@
     "errors.USER_ALREADY_EXISTS": "User already exists, please choose another name",
     "errors.EMAIL_ALREADY_EXISTS": "Email already exists, please enter another email",
     "errors.WEAK_PASSWORD": "Entered password is too weak",
+    "errors.INVALID_CURRENT_PASSWORD": "Provided current password is not correct",
 
     "containers.SigninPage.invalidCredentialsWereProvided": "Invalid credentials were provided",
     "containers.SigninPage.register": "Register",

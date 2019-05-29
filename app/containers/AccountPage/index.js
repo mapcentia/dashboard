@@ -17,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { makeSelectUser } from 'containers/App/selectors';
+import { makeSelectUser, makeSelectUpdateUserErrorCode } from 'containers/App/selectors';
 import SnackbarContent from 'components/SnackbarContent';
 import { updateUserRequest } from 'containers/App/actions';
 import { passwordIsStrongEnough } from 'utils/shared';
@@ -75,6 +75,10 @@ export class AccountPage extends React.PureComponent {
         if (this.state.passwordWasUpdated) {
             passwordUpdateNotification = (<div style={{color: `green`, paddingTop: `10px`, textAlign: `center`}}>
                 <FormattedMessage id="Password was updated" />
+            </div>);
+        } else if (this.props.updateUserErrorCode && this.props.updateUserErrorCode.length > 0) {
+            passwordUpdateNotification = (<div style={{color: `red`, paddingTop: `10px`, textAlign: `center`}}>
+                <FormattedMessage id={`errors.${this.props.updateUserErrorCode}`} />
             </div>);
         }
 
@@ -151,7 +155,8 @@ export class AccountPage extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
-    user: makeSelectUser()
+    user: makeSelectUser(),
+    updateUserErrorCode: makeSelectUpdateUserErrorCode()
 });
 
 const withConnect = connect(mapStateToProps);
