@@ -149,6 +149,7 @@ function appReducer(state = initialState, action) {
                 updateUserSuccess: true,
                 updateUserSuccessUserName: action.payload,
                 updateUserError: false,
+                updateUserErrorCode: ``
             });
         case UPDATE_USER_FAILURE:
             return Object.assign({}, state, {
