@@ -1,7 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { createStructuredSelector } from 'reselect';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -11,12 +14,15 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import LockIcon from '@material-ui/icons/Lock';
+import LaunchIcon from '@material-ui/icons/Launch';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import LinkIcon from '@material-ui/icons/Link';
 
 import StyledButtonLink from 'components/StyledButtonLink';
+import StyledExternalLink from 'components/StyledExternalLink';
 
 import config from 'config';
+import { makeSelectUser } from 'containers/App/selectors';
 
 class PublishedConfigurationsPage extends React.Component {
     constructor(props) {
@@ -28,6 +34,13 @@ class PublishedConfigurationsPage extends React.Component {
 
         let url = config.apiUrl + `configuration/${this.props.ownerScreenName}/${this.props.data.key}.json`;
         let parsedData = JSON.parse(this.props.data.value);
+
+        let databaseName = ``;
+        if (this.props.user.parentDb) {
+            databaseName = this.props.user.parentDb;
+        } else {
+            databaseName = this.props.user.screenName;
+        }
 
         return (<ExpansionPanel defaultExpanded={this.props.expanded ? true : false}>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
@@ -47,6 +60,12 @@ class PublishedConfigurationsPage extends React.Component {
                             style={{marginTop: `0px`}}/>
                     </div>
                     <div style={{textAlign: `right`}}>
+                        <StyledExternalLink href={`${config.vidiUrl}${databaseName}/?config=${url}`} target="_blank" style={{marginRight: `10px`}}>
+                            <Button color="primary" variant="contained" size="small">
+                                <LaunchIcon/> Vidi
+                            </Button>
+                        </StyledExternalLink>
+
                         <CopyToClipboard text={url}>
                             <Button variant="contained" size="small" style={{marginRight: `10px`}}>
                                 <FormattedMessage id="Copy link"/>
@@ -74,4 +93,10 @@ PublishedConfigurationsPage.defaultProps = {
     readOnly: false
 };
 
-export default injectIntl(PublishedConfigurationsPage);
+const mapStateToProps = createStructuredSelector({
+    user: makeSelectUser(),
+});
+
+const withConnect = connect(mapStateToProps);
+
+export default compose(withConnect)(injectIntl(PublishedConfigurationsPage));
