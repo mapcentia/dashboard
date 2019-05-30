@@ -19,6 +19,7 @@ class PublicLayout extends React.Component {
 
     render() {
         const { children } = this.props;
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
         const renderRegular = () => {
             return (
                 <Grid container direction="row" justify="center" alignItems="center">
@@ -36,7 +37,7 @@ class PublicLayout extends React.Component {
         } else {
             if (this.props.isAuthenticating === false) {
                 if (this.props.isAuthenticated) {
-                    return (<Redirect to="/"/>);
+                    return (<Redirect to={appBaseURL}/>);
                 } else {
                     return renderRegular();
                 }

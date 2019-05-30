@@ -41,6 +41,8 @@ export class ConfigurationsPanel extends React.PureComponent {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
         let configurationsFilter = false;
         let configurationsComponents = [];
         if (this.props.configurations) {
@@ -85,7 +87,7 @@ export class ConfigurationsPanel extends React.PureComponent {
             <div>
                 <Grid container spacing={8} direction="row" justify="space-between" alignItems="flex-start">
                     <Grid item>
-                        <StyledButtonLink to="/configuration/add">
+                        <StyledButtonLink to={appBaseURL + "configuration/add"}>
                             <Button
                                 variant="contained"
                                 size="small"

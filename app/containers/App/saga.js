@@ -22,6 +22,8 @@ import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall,
     getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
     createConfigurationCall, updateConfigurationCall, deleteConfigurationCall} from 'api';
 
+const appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
 export function* checkAuthorizationGenerator() {
     try {
         const response = yield call(checkAuthorizationCall);
@@ -37,9 +39,9 @@ export function* signInGenerator(credentials) {
         yield put(signInSuccess(result.data.data));
 
         if (result.data.data.passwordExpired) {
-            yield put(push(`/account`));
+            yield put(push(`${appBaseURL}account`));
         } else {
-            yield put(push(`/`));
+            yield put(push(appBaseURL));
         }
     } catch (err) {
         yield put(signInFailure());
@@ -65,7 +67,7 @@ export function* createUserGenerator(data) {
 }
 
 export function* signOutGenerator() {
-    yield put(push(`/sign-in`));
+    yield put(push(`${appBaseURL}sign-in`));
 }
 
 export function* updateUserGenerator(action) {
@@ -131,7 +133,7 @@ export function* getConfigurationsGenerator(action) {
 
 export function* forceUserUpdateGenerator(action) {
     if (action.payload.passwordExpired) {
-        yield put(push(`/account`));
+        yield put(push(`${appBaseURL}account`));
     }
 }
 
@@ -178,4 +180,3 @@ export default function* checkAuthorization() {
     yield takeLatest(UPDATE_CONFIGURATION_REQUEST, updateConfigurationGenerator);
     yield takeLatest(DELETE_CONFIGURATION_REQUEST, deleteConfigurationGenerator);
 }
-

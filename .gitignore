@@ -6,6 +6,7 @@ stats.json
 
 # Configuration
 app/config.js
+.env
 
 # Cruft
 .DS_Store

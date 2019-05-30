@@ -46,6 +46,8 @@ export class SubusersPanel extends React.PureComponent {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
         let subuserFilter = false;
         let subuserComponents = [];
         if (this.props.subusers) {
@@ -67,7 +69,7 @@ export class SubusersPanel extends React.PureComponent {
                         <CardHeader
                             avatar={<Avatar aria-label="Recipe" style={{backgroundColor: indigo[500]}}>{item.screenName[0].toUpperCase()}</Avatar>}
                             action={<div>
-                                <StyledButtonLink to={`/subuser/edit/${item.screenName}`}>
+                                <StyledButtonLink to={appBaseURL + `subuser/edit/${item.screenName}`}>
                                     <IconButton color="primary">
                                         <EditIcon />
                                     </IconButton>
@@ -102,7 +104,7 @@ export class SubusersPanel extends React.PureComponent {
                     <Grid item>
                         <Typography variant="h6" color="inherit">
                             <FormattedMessage id="Subusers"/>
-                            <StyledButtonLink to="/subuser/add">
+                            <StyledButtonLink to={appBaseURL + "subuser/add"}>
                                 <Button
                                     variant="contained"
                                     size="small"
@@ -116,7 +118,7 @@ export class SubusersPanel extends React.PureComponent {
                     <Grid item>{subuserFilter}</Grid>
                 </Grid>
             </div>
-            <div>{subuserComponents}</div>
+            <div style={{paddingTop: `10px`}}>{subuserComponents}</div>
         </div>);
     }
 }

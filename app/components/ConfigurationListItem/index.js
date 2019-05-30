@@ -24,6 +24,8 @@ class PublishedConfigurationsPage extends React.Component {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
         let url = config.apiUrl + `configuration/${this.props.ownerScreenName}/${this.props.data.key}.json`;
         let parsedData = JSON.parse(this.props.data.value);
 
@@ -51,7 +53,7 @@ class PublishedConfigurationsPage extends React.Component {
                             </Button>
                         </CopyToClipboard>
                         
-                        {this.props.readOnly === false ? (<StyledButtonLink to={`/configuration/edit/${this.props.data.key}`} style={{marginRight: `10px`}}>
+                        {this.props.readOnly === false ? (<StyledButtonLink to={appBaseURL + `configuration/edit/${this.props.data.key}`} style={{marginRight: `10px`}}>
                             <Button color="primary" variant="contained" size="small">
                                 <FormattedMessage id="Edit"/>
                             </Button>

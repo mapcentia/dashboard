@@ -31,10 +31,11 @@ class ProtectedLayout extends React.Component {
     }
 
     render() {
+        let prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
         const { children } = this.props;
         if (this.props.isAuthenticating === false) {
             if (this.props.isAuthenticated) {
-                let userButton = (<StyledButtonLink to="/account">
+                let userButton = (<StyledButtonLink to={prefix + "account"}>
                     <Button color="inherit">
                         <AccountCircleIcon style={{ marginRight: `6px`}}/> {this.props.user.screenName}
                     </Button>
@@ -53,7 +54,7 @@ class ProtectedLayout extends React.Component {
                             <Toolbar>
                                 <Grid container direction="row" justify="space-between" alignItems="flex-start">
                                     <Grid item>
-                                        <StyledButtonLink to="/">
+                                        <StyledButtonLink to={prefix}>
                                             <Typography variant="h6" color="inherit">
                                                 <FormattedMessage id="Geocloud Dashboard" />
                                             </Typography>
@@ -82,7 +83,7 @@ class ProtectedLayout extends React.Component {
                     </MainContentWrapper>
                 </div>);
             } else {
-                return (<Redirect to="/sign-in"/>);
+                return (<Redirect to={prefix + "sign-in"}/>);
             }
         } else {
             return (<AppLoadingOverlay/>);

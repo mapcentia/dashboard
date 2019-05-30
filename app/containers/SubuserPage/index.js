@@ -111,6 +111,8 @@ export class SubuserPage extends React.PureComponent {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
         let menuItems = [];
         if (this.props.subusers) {
             this.props.subusers.map((item, index) => {
@@ -148,13 +150,13 @@ export class SubuserPage extends React.PureComponent {
         } else if (this.props.updateError) {
             errorMessage = (<FormattedMessage id={`errors.${this.props.updateErrorCode}`} />)
         }
-
+        
         let overlay = false;
         if (overlayContent) {
             overlay = (<OverlayContainer>
                 <OverlayInner>
                     {overlayContent}
-                    <StyledButtonLink to="/">
+                    <StyledButtonLink to={appBaseURL}>
                         <Button variant="contained" color="primary">
                             <FormattedMessage id="Dashboard" />
                         </Button>

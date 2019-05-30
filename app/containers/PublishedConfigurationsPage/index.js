@@ -53,6 +53,7 @@ class PublishedConfigurationsPage extends React.Component {
             });
         }
 
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
         return (<div>
             <MainContentWrapper>
                 <Card>
@@ -61,7 +62,7 @@ class PublishedConfigurationsPage extends React.Component {
                             <Typography variant="h6" color="inherit">
                                 <FormattedMessage id="Configurations of"/> {this.state.userId}
 
-                                <StyledButtonLink to="/">
+                                <StyledButtonLink to={appBaseURL}>
                                     <Button
                                         variant="contained"
                                         size="small"

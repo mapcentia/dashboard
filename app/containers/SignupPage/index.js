@@ -33,6 +33,7 @@ class SignupPage extends React.Component {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
         return (
             <PublicFormsWrapper>
                 {this.props.success && this.props.username ? (
@@ -56,7 +57,7 @@ class SignupPage extends React.Component {
                     </ErrorWrapper>
                 ) : false}
                 {this.props.success ? false : (<Divider style={{ marginTop: `20px`, marginBottom: `20px` }}/>)}
-                <StyledLink to="/sign-in">
+                <StyledLink to={appBaseURL + "sign-in"}>
                     <Button type="button" fullWidth variant="contained" color="secondary">
                         <FormattedMessage id="Sign in" />
                     </Button>

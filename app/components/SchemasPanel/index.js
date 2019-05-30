@@ -50,6 +50,8 @@ export class SchemasPanel extends React.PureComponent {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
         let schemasFilter = false;
         let schemasComponents = [];
         if (this.props.schemas) {
@@ -94,7 +96,7 @@ export class SchemasPanel extends React.PureComponent {
                                         </Button>
                                     </StyledLink>
 
-                                    <StyledButtonLink to={`/admin/${databaseName}/${item.schema}`}>
+                                    <StyledButtonLink to={appBaseURL + `admin/${databaseName}/${item.schema}`}>
                                         <Button variant="contained" size="small">
                                             <SettingsIcon />
                                         </Button>
@@ -125,7 +127,10 @@ export class SchemasPanel extends React.PureComponent {
                     <Grid item>{schemasFilter}</Grid>
                 </Grid>
             </div>
-            <div style={{paddingTop: `10px`}}>{schemasComponents}</div>
+            <div style={{
+                paddingTop: `10px`,
+                paddingBottom: `10px`
+            }}>{schemasComponents}</div>
         </div>);
     }
 }

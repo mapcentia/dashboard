@@ -186,6 +186,8 @@ class ConfigurationPage extends React.Component {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+
         let dataIsValid = false;
         if (this.state.name && this.state.body && Object.keys(this.state.body).length > 0) {
             dataIsValid = true;
@@ -280,7 +282,7 @@ class ConfigurationPage extends React.Component {
                         <Button variant="contained" size="small" onClick={this.handleReset.bind(this)}>
                             <FormattedMessage id="Add new configuration"/>
                         </Button>
-                        <StyledButtonLink to="/#configuration">
+                        <StyledButtonLink to={appBaseURL + "#configuration"}>
                             <Button color="primary" variant="contained" size="small" style={{marginLeft: `10px`}}>
                                 <FormattedMessage id="Dashboard"/>
                             </Button>
@@ -297,12 +299,12 @@ class ConfigurationPage extends React.Component {
                         <FormattedMessage id="Configuration was updated"/>
                     </Typography>
                     <div style={{paddingTop: `10px`}}>
-                        <StyledButtonLink to="/configuration/add">
+                        <StyledButtonLink to={appBaseURL + "configuration/add"}>
                             <Button variant="contained" size="small" >
                                 <FormattedMessage id="Add new configuration"/>
                             </Button>
                         </StyledButtonLink>
-                        <StyledButtonLink to="/#configuration">
+                        <StyledButtonLink to={appBaseURL + "#configuration"}>
                             <Button color="primary" variant="contained" size="small" style={{marginLeft: `10px`}}>
                                 <FormattedMessage id="Dashboard"/>
                             </Button>

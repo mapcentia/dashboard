@@ -1,4 +1,5 @@
 // Important modules this config uses
+require('dotenv').config();
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
@@ -6,6 +7,7 @@ const OfflinePlugin = require('offline-plugin');
 const { HashedModuleIdsPlugin } = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = require('./webpack.base.babel')({
   mode: 'production',
@@ -15,11 +17,15 @@ module.exports = require('./webpack.base.babel')({
     require.resolve('react-app-polyfill/ie11'),
     path.join(process.cwd(), 'app/app.js'),
   ],
+  node: {
+    fs: "empty"
+  },
 
   // Utilize long-term caching by adding content hashes (not compilation hashes) to compiled assets
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[name].[chunkhash].chunk.js',
+    publicPath: (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : ``)
   },
 
   optimization: {
@@ -71,6 +77,7 @@ module.exports = require('./webpack.base.babel')({
   },
 
   plugins: [
+    new Dotenv(),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
       template: 'app/index.html',

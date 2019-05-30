@@ -14,10 +14,11 @@ const LogoWrapper = styled.div`
 
 const wrapper = (props) => {
     const { children } = props;
+    let prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
     return (<Card style={{ maxWidth: `400px` }}>
         <CardContent>
             <LogoWrapper>
-                <img src="/assets/img/MapCentia_500.png" style={{ maxWidth: `150px`, height: `auto` }}/>
+                <img src={prefix + "assets/img/MapCentia_500.png"} style={{ maxWidth: `150px`, height: `auto` }}/>
             </LogoWrapper>
             <Typography variant="h5" gutterBottom>
                 <FormattedMessage id={`welcomeDescription`} />

@@ -32,17 +32,18 @@ class App extends React.Component {
     }
 
     render() {
+        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
         return (<div>
             <Switch>
-                <ProtectedLayoutRoute exact path="/" component={DashboardPage} />
-                <Route exact path="/configuration/published/:id" component={PublishedConfigurationsPage} />
-                <ProtectedLayoutRoute exact path="/account" component={AccountPage} />
-                <ProtectedLayoutRoute exact path="/configuration/add" component={ConfigurationPage} />
-                <ProtectedLayoutRoute exact path="/configuration/edit/:id" component={ConfigurationPage} />
-                <ProtectedLayoutRoute exact path="/subuser/add" component={SubuserPage} />
-                <ProtectedLayoutRoute exact path="/subuser/edit/:id" component={SubuserPage} />
-                <PublicLayoutRoute exact path="/sign-in" component={SigninPage} />
-                <PublicLayoutRoute exact path="/sign-up" component={SignupPage} />
+                <ProtectedLayoutRoute exact path={appBaseURL} component={DashboardPage} />
+                <Route exact path={appBaseURL + "configuration/published/:id"} component={PublishedConfigurationsPage} />
+                <ProtectedLayoutRoute exact path={appBaseURL + "account"} component={AccountPage} />
+                <ProtectedLayoutRoute exact path={appBaseURL + "configuration/add"} component={ConfigurationPage} />
+                <ProtectedLayoutRoute exact path={appBaseURL + "configuration/edit/:id"} component={ConfigurationPage} />
+                <ProtectedLayoutRoute exact path={appBaseURL + "subuser/add"} component={SubuserPage} />
+                <ProtectedLayoutRoute exact path={appBaseURL + "subuser/edit/:id"} component={SubuserPage} />
+                <PublicLayoutRoute exact path={appBaseURL + "sign-in"} component={SigninPage} />
+                <PublicLayoutRoute exact path={appBaseURL + "sign-up"} component={SignupPage} />
                 <PublicLayoutRoute path="" component={NotFoundPage} />
             </Switch>
             <Footer />

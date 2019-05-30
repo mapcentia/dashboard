@@ -28,6 +28,7 @@ class Signin extends React.Component {
     }
 
     render() {
+        let prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
         return (
             <PublicFormsWrapper>
                 <SigninForm disabled={this.props.signingIn ? true : false} onSubmit={this.onSubmitHandler.bind(this)}/>
@@ -39,7 +40,7 @@ class Signin extends React.Component {
                     </ErrorWrapper>
                 ) : false}
                 <Divider style={{ marginTop: `20px`, marginBottom: `20px` }}/>
-                <StyledLink to="/sign-up">
+                <StyledLink to={prefix + "sign-up"}>
                     <Button type="submit" fullWidth variant="contained" color="secondary">
                         <FormattedMessage id="Register" />
                     </Button>
