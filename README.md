@@ -24,3 +24,4 @@ RewriteRule ^dashboard/(.*) dashboard/index.html [L]
 
 ...
 ```
+6. (optional) If the application is served from web root (accessible via `https://example.com/`), then `app/.htaccess` should be copied to the web root directory
