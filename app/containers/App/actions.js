@@ -65,7 +65,10 @@ export function checkAuthorizationRequest() {
 
 // Check authorization status
 export function checkAuthorizationSuccess(payload) { return { type: CHECK_AUTHORIZATION_SUCCESS, payload: normalizeUser(payload) }; }
-export function checkAuthorizationFailure() { return { type: CHECK_AUTHORIZATION_FAILURE }; }
+export function checkAuthorizationFailure() { 
+    cookies.remove('PHPSESSID');
+    return { type: CHECK_AUTHORIZATION_FAILURE };
+}
 export function signInRequest(payload) { return { type: SIGN_IN_REQUEST, payload }; }
 
 // Sign in
