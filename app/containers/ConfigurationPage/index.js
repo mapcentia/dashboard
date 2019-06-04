@@ -23,54 +23,9 @@ import PublicFormsWrapper from 'components/PublicFormsWrapper';
 import StyledLink from 'components/StyledLink';
 
 const placeholder = {
-    "backend": "gc2",
-    "gc2": {
-        "host": "https://gc2.mapcentia.com"
-    },
-    "configUrl": "https://mapcentia.github.io",
-    "print": {
-        "templates": {
-            "print": {
-                A4: {
-                    l: {
-                        mapsizePx: [1060, 730],
-                        mapsizeMm: [280, 192]
-                    },
-                    p: {
-                        mapsizePx: [730, 1060],
-                        mapsizeMm: [192, 280]
-                    }
-                }
-            },
-            "_conflictPrint": {
-                "A4": {
-                    "p": {
-                        "mapsizePx": [700, 500],
-                        "mapsizeMm": [190, 120]
-                    }
-                }
-            }
-        },
-        "scales": [100, 250, 500, 1000, 2000, 3000, 4000, 5000, 7500, 10000, 15000, 25000, 50000, 100000]
-    },
-    "extensions": {
-        "browser": [
-            {"conflictSearch": ["index", "reportRender", "infoClick", "controller"]},
-            {"streetView": ["index"]},
-            {"coordinates": ["index"]},
-            {"offlineMap": ["index"]},
-            {"session": ["index"]},
-            {"editor": ["index"]}
-        ],
-        "server": [
-            {"conflictSearch": ["index"]},
-            {"session": ["index"]},
-        ]
-    },
-
-    "searchModules": ["google", "danish"],
-    "autoLoadingConfig": true,
-    "defaultConfig": "vidi.json",
+    "schemata": [
+        "public"
+    ],
     "brandName": "MapCentia ApS",
     "aboutBox": "<p>My awesome web map</p>",
     "enabledExtensions": [
@@ -86,9 +41,7 @@ const placeholder = {
     "enabledPrints": ["print"],
     "enabledSearch": "google",
     "extensionConfig": {
-        "layerSearch": {
-            "host": "localhost:9200"
-        }
+
     },
     "baseLayers": [
         {"id": "stamenTonerLite", "name": "Stamen Toner Light"},
