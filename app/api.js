@@ -73,14 +73,24 @@ const deleteUserCall = (action) => {
 }
 
 const createConfigurationCall = (action) => {
-    let submittedData = action.payload.data;
-    submittedData.body = JSON.stringify(submittedData.body);
+    let submittedData = {
+        name: action.payload.data.name,
+        description: action.payload.data.description,
+        body: JSON.stringify(action.payload.data.body),
+        published: action.payload.data.published
+    };
+
     return axios.post(`${config.apiUrl}configuration/${action.payload.userId}`, submittedData, {withCredentials: true});
 }
 
 const updateConfigurationCall = (action) => {
-    let submittedData = action.payload.data;
-    submittedData.body = JSON.stringify(submittedData.body);
+    let submittedData = {
+        name: action.payload.data.name,
+        description: action.payload.data.description,
+        body: JSON.stringify(action.payload.data.body),
+        published: action.payload.data.published
+    };
+
     return axios.put(`${config.apiUrl}configuration/${action.payload.userId}/${action.payload.data.key}`, submittedData, {withCredentials: true});
 }
 
