@@ -56,6 +56,7 @@ const initialState = {
     name: ``,
     description: ``,
     body: placeholder,
+    bodyIsValid: true,
     published: true,
 };
 
@@ -88,6 +89,7 @@ class ConfigurationPage extends React.Component {
                     newState.name = parsedData.name;
                     newState.description = parsedData.description;
                     newState.body = JSON.parse(parsedData.body);
+                    newState.bodyIsValid = true;
                     newState.published = parsedData.published;
                     newState.configurationWasSet = true;
                 }
@@ -101,9 +103,12 @@ class ConfigurationPage extends React.Component {
 
     handleJSONUpdate(value) {
         if (value.jsObject) {
-            this.setState({ body: value.jsObject });
+            this.setState({
+                body: value.jsObject,
+                bodyIsValid: true
+            });
         } else {
-            this.setState({ body: false });
+            this.setState({bodyIsValid: false});
         }
     }
 
@@ -142,11 +147,11 @@ class ConfigurationPage extends React.Component {
         let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
 
         let dataIsValid = false;
-        if (this.state.name && this.state.body && Object.keys(this.state.body).length > 0) {
+        if (this.state.name && this.state.body && Object.keys(this.state.body).length > 0 && this.state.bodyIsValid) {
             dataIsValid = true;
         }
 
-        let localPlaceholder = (this.state.key ? this.state.body : placeholder);
+        let localPlaceholder = (this.state.body ? (typeof this.state.body === `string` ? JSON.parse(this.state.body) : this.state.body) : placeholder);
         let formPanel = (<Grid item xs>
             <Grid container>
                 <Grid item>
