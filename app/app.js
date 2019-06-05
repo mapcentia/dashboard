@@ -67,9 +67,3 @@ if (!window.Intl) {
     render(translationMessages);
 }
 
-// Install ServiceWorker and AppCache in the end since
-// it's not most important operation and if main code fails,
-// we do not want it installed
-if (process.env.NODE_ENV === 'production') {
-    require('offline-plugin/runtime').install({publicPath: process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : ``}); // eslint-disable-line global-require
-}
