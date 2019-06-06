@@ -11,6 +11,10 @@
     "containers.SubuserPage.descriptionInheritPrivilegesCreate": "Inherit the privileges from another sub-user. If set the new sub-users will have the same privileges as the selected. That is, the selected sub-user will serve as a user group. You will not be able to grant privileges directly to the new sub-user.",
     "containers.SubuserPage.descriptionInheritPrivilegesEdit": "Inherit the privileges from another sub-user. Set to blank if you don't want the sub-user to inherit privileges.",
 
+    "No databases found for the specified user": "No databases found for the specified user",
+    "Select database": "Select database",
+    "Parent database": "Parent database",
+    "Enter password": "Enter password",
     "Published": "Published",
     "Add new configuration": "Add new configuration",
     "Configuration was added": "Configuration was added",

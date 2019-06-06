@@ -9,6 +9,9 @@ const makeSelectUser = () => createSelector(selectGlobal, globalState => globalS
 const makeSelectSigningIn = () => createSelector(selectGlobal, globalState => globalState.signingIn);
 const makeSelectSigningInError = () => createSelector(selectGlobal, globalState => globalState.signingInError);
 
+const makeSelectAvailableDatabasesList = () => createSelector(selectGlobal, globalState => globalState.availableDatabasesList);
+const makeSelectAvailableDatabasesUserName = () => createSelector(selectGlobal, globalState => globalState.availableDatabasesUserName);
+
 const makeSelectCreateUser = () => createSelector(selectGlobal, globalState => globalState.createUser);
 const makeSelectCreateUserSuccess = () => createSelector(selectGlobal, globalState => globalState.createUserSuccess);
 const makeSelectCreateUserSuccessUserName = () => createSelector(selectGlobal, globalState => globalState.createUserSuccessUserName);
@@ -42,6 +45,9 @@ export {
     makeSelectSigningInError,
     makeSelectCreateUser,
 
+    makeSelectAvailableDatabasesList,
+    makeSelectAvailableDatabasesUserName,
+
     makeSelectCreateUserSuccess,
     makeSelectCreateUserSuccessUserName,
     makeSelectCreateUserError,
@@ -64,5 +70,4 @@ export {
     makeSelectUpdateConfigurationLoading,
     makeSelectUpdateConfigurationSuccess,
     makeSelectUpdateConfigurationError,
-
 };
