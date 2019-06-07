@@ -86,22 +86,24 @@ export class AccountPage extends React.PureComponent {
             <Grid container spacing={24}>
                 <Grid item md={6}>
                     <Typography variant="h4" color="inherit">
-                        <FormattedMessage id="General information" />
+                        <FormattedMessage id="General information"/>
                     </Typography>
                     <Table>
                         <TableBody>
                             <TableRow>
-                                <TableCell>
-                                    <FormattedMessage id="Name" />
-                                </TableCell>
+                                <TableCell><FormattedMessage id="Name"/></TableCell>
                                 <TableCell>{this.props.user.screenName}</TableCell>
                             </TableRow>
                             <TableRow>
-                                <TableCell>
-                                    <FormattedMessage id="Email address" />
-                                </TableCell>
+                                <TableCell><FormattedMessage id="Email address"/></TableCell>
                                 <TableCell>{this.props.user.email}</TableCell>
                             </TableRow>
+                            {this.props.user.subuser ? (<TableRow>
+                                <TableCell><FormattedMessage id="Parent database"/></TableCell>
+                                <TableCell>
+                                    <span>{this.props.user.parentDb}</span>
+                                </TableCell>
+                            </TableRow>) : false}
                         </TableBody>
                     </Table>
                 </Grid>

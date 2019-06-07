@@ -2,6 +2,7 @@ import { push } from 'react-router-redux';
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { checkAuthorizationSuccess, checkAuthorizationFailure,
     signInSuccess, signInFailure,
+    getDatabasesSuccess, getDatabasesFailure,
     createUserSuccess, createUserFailure,
     updateUserSuccess, updateUserFailure, updateUserPasswordSuccess,
     deleteUserSuccess, deleteUserFailure,
@@ -14,11 +15,12 @@ import { checkAuthorizationSuccess, checkAuthorizationFailure,
 
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
     SIGN_IN_REQUEST, SIGN_OUT,
+    GET_DATABASES_REQUEST,
     CREATE_USER_REQUEST, UPDATE_USER_REQUEST, DELETE_USER_REQUEST,
     GET_CONFIGURATIONS_REQUEST, CREATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_REQUEST,
     GET_SUBUSERS_REQUEST, GET_SCHEMAS_REQUEST} from 'containers/App/constants';
 
-import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall,
+import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getDatabasesCall,
     getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
     createConfigurationCall, updateConfigurationCall, deleteConfigurationCall} from 'api';
 
@@ -45,6 +47,18 @@ export function* signInGenerator(credentials) {
         }
     } catch (err) {
         yield put(signInFailure());
+    }
+}
+
+export function* getDatabasesGenerator(data) {
+    try {
+        const result = yield call(getDatabasesCall, data);
+        yield put(getDatabasesSuccess({
+            databases: result.data.databases,
+            userName: data.payload
+        }));
+    } catch (err) {
+        yield put(getDatabasesFailure());
     }
 }
 
@@ -168,6 +182,7 @@ export function* deleteConfigurationGenerator(action) {
 export default function* checkAuthorization() {
     yield takeLatest(CHECK_AUTHORIZATION_REQUEST, checkAuthorizationGenerator);
     yield takeLatest(SIGN_IN_REQUEST, signInGenerator);
+    yield takeLatest(GET_DATABASES_REQUEST, getDatabasesGenerator);
     yield takeLatest(SIGN_OUT, signOutGenerator);
     yield takeLatest(CREATE_USER_REQUEST, createUserGenerator);
     yield takeLatest(UPDATE_USER_REQUEST, updateUserGenerator);

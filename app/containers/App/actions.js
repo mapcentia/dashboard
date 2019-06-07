@@ -1,6 +1,7 @@
 import Cookies from 'universal-cookie';
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE } from 'containers/App/constants';
 import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, SIGN_OUT,
+    GET_DATABASES_RESET, GET_DATABASES_REQUEST, GET_DATABASES_SUCCESS, GET_DATABASES_FAILURE,
     CREATE_USER_RESET, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
@@ -71,9 +72,15 @@ export function checkAuthorizationFailure() {
 }
 export function signInRequest(payload) { return { type: SIGN_IN_REQUEST, payload }; }
 
+// Get databases for available user
+export function getDatabasesReset() { return { type: GET_DATABASES_RESET }; }
+export function getDatabasesRequest(payload) { return { type: GET_DATABASES_REQUEST, payload }; }
+export function getDatabasesSuccess(payload) { return { type: GET_DATABASES_SUCCESS, payload }; }
+export function getDatabasesFailure(payload) { return { type: GET_DATABASES_FAILURE, payload }; }
+
 // Sign in
 export function signInSuccess(payload) {
-    cookies.set('PHPSESSID', payload.session_id);
+    cookies.set('PHPSESSID', payload.session_id, {path: `/`});
     return { type: SIGN_IN_SUCCESS, payload: normalizeUser(payload) };
 }
 
@@ -83,7 +90,7 @@ export function signInFailure() {
 
 // Sign out
 export function signOut() {
-    cookies.remove('PHPSESSID');
+    cookies.remove('PHPSESSID', {path: `/`});
     return { type: SIGN_OUT };
 }
 

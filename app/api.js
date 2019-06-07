@@ -14,6 +14,10 @@ const signInCall = (action) => {
     return axios.post(`${config.apiUrl}session/start`, action.payload, {withCredentials: true});
 };
 
+const getDatabasesCall = (action) => {
+    return axios.get(`${config.apiUrl}database/search?userName=${action.payload}`, {withCredentials: true});
+};
+
 const createUserCall = (action) => {
     const schema = Joi.object({
         data: Joi.object().keys({
@@ -99,4 +103,4 @@ const deleteConfigurationCall = (action) => {
 }
 
 export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
-    createConfigurationCall, updateConfigurationCall, deleteConfigurationCall};
+    createConfigurationCall, getDatabasesCall, updateConfigurationCall, deleteConfigurationCall};

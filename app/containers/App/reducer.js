@@ -2,6 +2,7 @@ import { fromJS } from 'immutable';
 
 import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHECK_AUTHORIZATION_FAILURE,
     SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE,
+    GET_DATABASES_RESET, GET_DATABASES_REQUEST, GET_DATABASES_SUCCESS, GET_DATABASES_FAILURE,
     CREATE_USER_RESET, CREATE_USER_REQUEST, CREATE_USER_SUCCESS, CREATE_USER_FAILURE,
     UPDATE_USER_REQUEST, UPDATE_USER_SUCCESS, UPDATE_USER_FAILURE, UPDATE_USER_PASSWORD_SUCCESS,
     GET_SUBUSERS_REQUEST, GET_SUBUSERS_SUCCESS, GET_SUBUSERS_FAILURE,
@@ -42,6 +43,9 @@ const initialState = fromJS({
     updateConfiguration: false,
     updateConfigurationSuccess: false,
     updateConfigurationError: false,
+
+    availableDatabasesList: false,
+    availableDatabasesUserName: ``,
 
     subusers: [],
     schemas: [],
@@ -97,6 +101,22 @@ function appReducer(state = initialState, action) {
                 signingInSuccess: false,
                 signingInError: true,
                 user: false
+            });
+
+        case GET_DATABASES_RESET:
+            return Object.assign({}, state, {
+                availableDatabasesList: false,
+                availableDatabasesUserName: ``,
+            });
+        case GET_DATABASES_REQUEST:
+            return Object.assign({}, state, {
+                availableDatabasesList: false,
+                availableDatabasesUserName: ``,
+            });
+        case GET_DATABASES_SUCCESS:
+            return Object.assign({}, state, {
+                availableDatabasesList: action.payload.databases,
+                availableDatabasesUserName: action.payload.userName,
             });
 
         case CREATE_USER_RESET:
