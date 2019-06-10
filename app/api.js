@@ -15,7 +15,7 @@ const signInCall = (action) => {
 };
 
 const getDatabasesCall = (action) => {
-    return axios.get(`${config.apiUrl}database/search?userName=${action.payload}`, {withCredentials: true});
+    return axios.get(`${config.apiUrl}database/search?userIdentifier=${action.payload}`, {withCredentials: true});
 };
 
 const createUserCall = (action) => {

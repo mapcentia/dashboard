@@ -74,7 +74,7 @@ class SigninForm extends React.Component {
                         name="username"
                         autoFocus
                         required
-                        label={this.props.intl.formatMessage({id: "Username"})}
+                        label={this.props.intl.formatMessage({id: "Username or email"})}
                         disabled={this.props.disabled}
                         value={this.state.user}
                         onChange={(event) => {
