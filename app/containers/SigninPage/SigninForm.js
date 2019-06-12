@@ -12,7 +12,7 @@ import NativeSelect from '@material-ui/core/NativeSelect';
 
 import { makeSelectAvailableDatabasesList, makeSelectAvailableDatabasesUserName } from 'containers/App/selectors';
 
-const MIN_LENGTH = 3;
+const MIN_LENGTH = 1;
 const STEP_NAME = 0;
 const STEP_PASSWORD = 1;
 
