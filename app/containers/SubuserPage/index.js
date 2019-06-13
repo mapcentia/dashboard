@@ -44,6 +44,8 @@ const OverlayInner = styled.div`
     width: 100%;
 `;
 
+const NULL_VALUE = `null`;
+
 export class SubuserPage extends React.PureComponent {
     constructor(props) {
         super(props);
@@ -55,7 +57,7 @@ export class SubuserPage extends React.PureComponent {
             password1: ``,
             password2: ``,
             createSchema: false,
-            usergroup: `null`,
+            usergroup: NULL_VALUE
         }
     }
 
@@ -94,14 +96,18 @@ export class SubuserPage extends React.PureComponent {
 
     handleSave() {
         if (this.state.addingSubuser) {
-            this.props.dispatch(createUserRequest({
-                data: {
-                    name: this.state.screenName,
-                    email: this.state.email,
-                    password: this.state.password1,
-                    usergroup: this.state.usergroup,
-                }
-            }));
+            let data = {
+                name: this.state.screenName,
+                email: this.state.email,
+                password: this.state.password1,
+                
+            };
+
+            if (this.state.usergroup && this.state.usergroup !== NULL_VALUE) {
+                data.usergroup = this.state.usergroup;
+            }
+
+            this.props.dispatch(createUserRequest({data}));
         } else {
             this.props.dispatch(updateUserRequest(this.props.match.params.id, {
                 password: this.state.password1,
@@ -241,7 +247,7 @@ export class SubuserPage extends React.PureComponent {
                         <Select
                             value={this.state.usergroup}
                             onChange={(event) => { this.setState({usergroup: event.target.value})}}>
-                            <MenuItem value="null">{this.props.intl.formatMessage({id: `Do not inherit`})}</MenuItem>
+                            <MenuItem value={NULL_VALUE}>{this.props.intl.formatMessage({id: `Do not inherit`})}</MenuItem>
                             {menuItems}
                         </Select>
                     </FormControl>
