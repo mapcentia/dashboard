@@ -66,7 +66,12 @@ class SigninForm extends React.Component {
             }
         }
 
-        return (<form>
+        return (<form onSubmit={(e) => {
+            if (step === STEP_NAME) {
+                this.props.onGetDatabases(this.state.user)
+                e.preventDefault();
+            }
+        }}>
             <div style={{ paddingBottom: `20px`}}>
                 <FormControl margin="normal" fullWidth>
                     <TextField
@@ -107,7 +112,7 @@ class SigninForm extends React.Component {
                 </div>) : false}
             </div>
             {step === STEP_NAME ? (<Button
-                type="button"
+                type="submit"
                 onClick={() => { this.props.onGetDatabases(this.state.user)}}
                 fullWidth
                 variant="contained"
