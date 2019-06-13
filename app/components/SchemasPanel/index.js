@@ -1,9 +1,9 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
-import { createStructuredSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
-import { injectIntl } from 'react-intl';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
+import {createStructuredSelector} from 'reselect';
+import {FormattedMessage} from 'react-intl';
+import {injectIntl} from 'react-intl';
 
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -20,8 +20,8 @@ import ExploreIcon from '@material-ui/icons/Explore';
 
 import config from 'config';
 
-import { makeSelectUser, makeSelectSchemas } from 'containers/App/selectors';
-import { getSchemasRequest } from 'containers/App/actions';
+import {makeSelectUser, makeSelectSchemas} from 'containers/App/selectors';
+import {getSchemasRequest} from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
 import StyledExternalLink from 'components/StyledExternalLink';
@@ -47,14 +47,16 @@ export class SchemasPanel extends React.PureComponent {
         if (this.props.schemas) {
             schemasFilter = (<Grid container spacing={8} alignItems="flex-end">
                 <Grid item>
-                    <SearchIcon />
+                    <SearchIcon/>
                 </Grid>
                 <Grid item>
                     <TextField
                         fullWidth
                         placeholder={this.props.intl.formatMessage({id: `Filter`})}
                         value={this.state.schemasFilter}
-                        onChange={(event) => { this.setState({ schemasFilter: event.target.value }) }} />
+                        onChange={(event) => {
+                            this.setState({schemasFilter: event.target.value})
+                        }}/>
                 </Grid>
             </Grid>);
 
@@ -69,7 +71,7 @@ export class SchemasPanel extends React.PureComponent {
 
                     let numberOfLayers = (item.count ? item.count : 0);
                     schemasComponents.push(<ExpansionPanel key={`schema_card_${index}`} defaultExpanded={false}>
-                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                             <Typography><ExploreIcon/> {item.schema}</Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
@@ -77,20 +79,20 @@ export class SchemasPanel extends React.PureComponent {
                                 <Grid item style={{flex: `0 0 50%`}}>
                                     <Typography>
                                         <FormattedMessage id="Number of layers"/>: <strong>{numberOfLayers}</strong>
-                                    </Typography>                                    
+                                    </Typography>
                                 </Grid>
                                 <Grid item style={{flex: `0 0 50%`, textAlign: `right`}}>
-                                    <StyledExternalLink href={`${config.vidiUrl}${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
+                                    <StyledExternalLink href={`${window.gc2Options.vidiUrl}/app/${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
                                         <Button color="primary" variant="contained" size="small">
                                             <LaunchIcon/> Vidi
                                         </Button>
                                     </StyledExternalLink>
 
-                                    <StyledButtonLink to={appBaseURL + `admin/${databaseName}/${item.schema}`}>
+                                    <StyledExternalLink href={`/admin/${databaseName}/${item.schema}`} target="_blank">
                                         <Button variant="contained" size="small">
-                                            <SettingsIcon />
+                                            <SettingsIcon/>
                                         </Button>
-                                    </StyledButtonLink>
+                                    </StyledExternalLink>
                                 </Grid>
                             </Grid>
                         </ExpansionPanelDetails>

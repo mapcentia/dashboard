@@ -5,7 +5,7 @@
  */
 const config = {
     apiUrl: `/api/v2/`,
-    vidiUrl: `http://example.com:8080/app/`
+    vidiUrl: `http://127.0.0.1:3000/app/`
 };
 
 export default config;
