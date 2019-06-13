@@ -55,7 +55,7 @@ export class SubuserPage extends React.PureComponent {
             password1: ``,
             password2: ``,
             createSchema: false,
-            usergroup: `null`,
+            usergroup: `NULL`,
         }
     }
 
@@ -241,7 +241,7 @@ export class SubuserPage extends React.PureComponent {
                         <Select
                             value={this.state.usergroup}
                             onChange={(event) => { this.setState({usergroup: event.target.value})}}>
-                            <MenuItem value="null">{this.props.intl.formatMessage({id: `Do not inherit`})}</MenuItem>
+                            <MenuItem value="NULL">{this.props.intl.formatMessage({id: `Do not inherit`})}</MenuItem>
                             {menuItems}
                         </Select>
                     </FormControl>
