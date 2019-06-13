@@ -60,7 +60,7 @@ class PublishedConfigurationsPage extends React.Component {
                             style={{marginTop: `0px`}}/>
                     </div>
                     <div style={{textAlign: `right`}}>
-                        <StyledExternalLink href={`${config.vidiUrl}${databaseName}/?config=${url}`} target="_blank" style={{marginRight: `10px`}}>
+                        <StyledExternalLink href={`${window.gc2Options.vidiUrl}/app/${databaseName}/?config=${url}`} target="_blank" style={{marginRight: `10px`}}>
                             <Button color="primary" variant="contained" size="small">
                                 <LaunchIcon/> Vidi
                             </Button>
