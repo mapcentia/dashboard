@@ -34,17 +34,7 @@ const placeholder = {
         "editor",
         "offlineMap"
     ],
-
-    "template": "default.tmpl",
-    "enabledPrints": ["print"],
-    "enabledSearch": "google",
-    "extensionConfig": {
-
-    },
-    "baseLayers": [
-        {"id": "stamenTonerLite", "name": "Stamen Toner Light"},
-        {"id": "osm", "name": "Open Street Map"}
-    ]
+    "template": "default.tmpl"
 };
 
 const initialState = {
