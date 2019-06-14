@@ -6,6 +6,16 @@ import Typography from '@material-ui/core/Typography';
 
 const LoadingWrapper = styled.div`
     position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 1);
+    z-index: 1000;
+`;
+
+const InnerWrapper = styled.div`
+    position: absolute;
+    background-color: white;
     top: 40%;
     left: calc(50% - 150px);
     text-align: center;
@@ -14,14 +24,17 @@ const LoadingWrapper = styled.div`
 
 const TextWrapper = styled.div` padding-top: 20px; `;
 
-const AppLoadingOverlay = () => {
+const AppLoadingOverlay = (props) => {
+    let messageId = (props.messageId ? props.messageId : `checkingAuthorizationStatus`);
     return (<LoadingWrapper>
-        <CircularProgress/>
-        <TextWrapper>
-            <Typography variant="subtitle1" gutterBottom>
-                <FormattedMessage id={`checkingAuthorizationStatus`} />
-            </Typography>
-        </TextWrapper>
+        <InnerWrapper>
+            <CircularProgress/>
+            <TextWrapper>
+                <Typography variant="subtitle1" gutterBottom>
+                    <FormattedMessage id={messageId} />
+                </Typography>
+            </TextWrapper>
+        </InnerWrapper>
     </LoadingWrapper>);
 };
 

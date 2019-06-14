@@ -10,10 +10,13 @@ import { SIGN_OUT, CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS, CHE
     GET_CONFIGURATIONS_REQUEST, GET_CONFIGURATIONS_SUCCESS, GET_CONFIGURATIONS_FAILURE,
     CREATE_UPDATE_CONFIGURATION_RESET, CREATE_CONFIGURATION_REQUEST, CREATE_CONFIGURATION_SUCCESS, CREATE_CONFIGURATION_FAILURE,
     UPDATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_SUCCESS, UPDATE_CONFIGURATION_FAILURE,
-    DELETE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_SUCCESS, DELETE_CONFIGURATION_FAILURE,
+    GET_GC2_CONFIGURATION_REQUEST, GET_GC2_CONFIGURATION_SUCCESS,
     CREATE_UPDATE_USER_RESET } from 'containers/App/constants';
 
 const initialState = fromJS({
+    gc2Configuration: false,
+    gc2ConfigurationLoading: false,
+
     isAuthenticating: true,
     isAuthenticated: false,
     user: false,
@@ -54,6 +57,16 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
     switch (action.type) {
+        case GET_GC2_CONFIGURATION_REQUEST:
+            return Object.assign({}, state, {
+                gc2Configuration: false,
+                gc2ConfigurationLoading: true,
+            });
+        case GET_GC2_CONFIGURATION_SUCCESS:
+            return Object.assign({}, state, {
+                gc2Configuration: action.payload,
+                gc2ConfigurationLoading: false,
+            });
         case SIGN_OUT:
             return Object.assign({}, state, {
                 isAuthenticating: false,

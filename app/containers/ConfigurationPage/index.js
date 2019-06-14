@@ -19,8 +19,6 @@ import { getConfigurationsRequest, deleteConfigurationRequest, createUpdateConfi
 
 import { makeSelectConfigurations, makeSelectUser, makeSelectCreateConfigurationLoading,
     makeSelectCreateConfigurationSuccess, makeSelectUpdateConfigurationSuccess } from 'containers/App/selectors';
-import PublicFormsWrapper from 'components/PublicFormsWrapper';
-import StyledLink from 'components/StyledLink';
 
 const placeholder = {
     "schemata": [

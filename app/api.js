@@ -18,6 +18,10 @@ const getDatabasesCall = (action) => {
     return axios.get(`${config.apiUrl}database/search?userIdentifier=${action.payload}`, {withCredentials: true});
 };
 
+const getGC2ConfigurationCall = () => {
+    return axios.get(`${config.apiUrl.replace(`/api/v2/`, `/api/v1/`)}baselayerjs?format=json`, {withCredentials: true});
+};
+
 const createUserCall = (action) => {
     const schema = Joi.object({
         data: Joi.object().keys({
@@ -103,4 +107,4 @@ const deleteConfigurationCall = (action) => {
 }
 
 export {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
-    createConfigurationCall, getDatabasesCall, updateConfigurationCall, deleteConfigurationCall};
+    createConfigurationCall, getDatabasesCall, updateConfigurationCall, deleteConfigurationCall, getGC2ConfigurationCall};

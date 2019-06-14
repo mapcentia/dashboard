@@ -22,7 +22,7 @@ import StyledButtonLink from 'components/StyledButtonLink';
 import StyledExternalLink from 'components/StyledExternalLink';
 
 import config from 'config';
-import { makeSelectUser } from 'containers/App/selectors';
+import { makeSelectUser, makeSelectGC2Configuration } from 'containers/App/selectors';
 
 class PublishedConfigurationsPage extends React.Component {
     constructor(props) {
@@ -60,11 +60,11 @@ class PublishedConfigurationsPage extends React.Component {
                             style={{marginTop: `0px`}}/>
                     </div>
                     <div style={{textAlign: `right`}}>
-                        <StyledExternalLink href={`${window.gc2Options.vidiUrl}/app/${databaseName}/?config=${url}`} target="_blank" style={{marginRight: `10px`}}>
+                        {this.props.gc2Configuration ? (<StyledExternalLink href={`${this.props.gc2Configuration.gc2Options.vidiUrl}/app/${databaseName}/?config=${url}`} target="_blank" style={{marginRight: `10px`}}>
                             <Button color="primary" variant="contained" size="small">
                                 <LaunchIcon/> Vidi
                             </Button>
-                        </StyledExternalLink>
+                        </StyledExternalLink>) : false}
 
                         <CopyToClipboard text={url}>
                             <Button variant="contained" size="small" style={{marginRight: `10px`}}>
@@ -94,6 +94,7 @@ PublishedConfigurationsPage.defaultProps = {
 };
 
 const mapStateToProps = createStructuredSelector({
+    gc2Configuration: makeSelectGC2Configuration(),
     user: makeSelectUser(),
 });
 

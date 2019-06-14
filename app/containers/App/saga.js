@@ -11,18 +11,21 @@ import { checkAuthorizationSuccess, checkAuthorizationFailure,
     getConfigurationsSuccess, getConfigurationsFailure,
     createConfigurationSuccess, createConfigurationFailure,
     updateConfigurationSuccess, updateConfigurationFailure,
-    deleteConfigurationSuccess, deleteConfigurationFailure, getConfigurationsRequest } from 'containers/App/actions';
+    deleteConfigurationSuccess, deleteConfigurationFailure, getConfigurationsRequest,
+    getGC2ConfigurationSuccess, checkAuthorizationRequest } from 'containers/App/actions';
+
+import { changeLocale } from 'containers/LanguageProvider/actions';
 
 import { CHECK_AUTHORIZATION_REQUEST, CHECK_AUTHORIZATION_SUCCESS,
     SIGN_IN_REQUEST, SIGN_OUT,
     GET_DATABASES_REQUEST,
     CREATE_USER_REQUEST, UPDATE_USER_REQUEST, DELETE_USER_REQUEST,
     GET_CONFIGURATIONS_REQUEST, CREATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_REQUEST,
-    GET_SUBUSERS_REQUEST, GET_SCHEMAS_REQUEST} from 'containers/App/constants';
+    GET_SUBUSERS_REQUEST, GET_SCHEMAS_REQUEST, GET_GC2_CONFIGURATION_REQUEST } from 'containers/App/constants';
 
 import {checkAuthorizationCall, signInCall, createUserCall, updateUserCall, getDatabasesCall,
     getSubusersCall, getSchemasCall, deleteUserCall, getConfigurationsCall,
-    createConfigurationCall, updateConfigurationCall, deleteConfigurationCall} from 'api';
+    createConfigurationCall, updateConfigurationCall, deleteConfigurationCall, getGC2ConfigurationCall} from 'api';
 
 const appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
 
@@ -179,6 +182,25 @@ export function* deleteConfigurationGenerator(action) {
     }
 }
 
+export function* getGC2ConfigurationGenerator() {
+    const response = yield call(getGC2ConfigurationCall);
+    try {
+        yield put(getGC2ConfigurationSuccess(response.data));
+        yield put(checkAuthorizationRequest({}));
+        if (response.data && response.data.gc2Al) {
+            if (response.data.gc2Al.indexOf(`da_`) === 0) {
+                yield put(changeLocale(`da`));
+            } else if (response.data.gc2Al.indexOf(`en_`) === 0) {
+                yield put(changeLocale(`en`));
+            }
+        }
+    } catch(err) {
+        yield put(getGC2ConfigurationSuccess({}));
+        yield put(checkAuthorizationRequest({}));
+
+    }
+}
+
 export default function* checkAuthorization() {
     yield takeLatest(CHECK_AUTHORIZATION_REQUEST, checkAuthorizationGenerator);
     yield takeLatest(SIGN_IN_REQUEST, signInGenerator);
@@ -194,4 +216,5 @@ export default function* checkAuthorization() {
     yield takeLatest(CREATE_CONFIGURATION_REQUEST, createConfigurationGenerator);
     yield takeLatest(UPDATE_CONFIGURATION_REQUEST, updateConfigurationGenerator);
     yield takeLatest(DELETE_CONFIGURATION_REQUEST, deleteConfigurationGenerator);
+    yield takeLatest(GET_GC2_CONFIGURATION_REQUEST, getGC2ConfigurationGenerator);
 }
