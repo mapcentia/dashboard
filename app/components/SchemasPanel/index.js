@@ -77,7 +77,7 @@ export class SchemasPanel extends React.PureComponent {
                                     </Typography>
                                 </Grid>
                                 <Grid item style={{flex: `0 0 50%`, textAlign: `right`}}>
-                                    <StyledExternalLink href={`${this.props.gc2Configuration.gc2Options.vidiUrl}/app/${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
+                                    <StyledExternalLink href={`${this.props.gc2Configuration.vidiUrl}/app/${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
                                         <Button color="primary" variant="contained" size="small">
                                             <LaunchIcon/> Vidi
                                         </Button>
