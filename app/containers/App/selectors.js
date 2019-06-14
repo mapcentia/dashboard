@@ -2,6 +2,9 @@ import { createSelector } from 'reselect';
 
 const selectGlobal = state => state.get('global');
 
+const makeSelectGC2Configuration = () => createSelector(selectGlobal, globalState => globalState.gc2Configuration);
+const makeSelectGC2ConfigurationLoading = () => createSelector(selectGlobal, globalState => globalState.gc2ConfigurationLoading);
+
 const makeSelectIsAuthenticating = () => createSelector(selectGlobal, globalState => globalState.isAuthenticating);
 const makeSelectIsAuthenticated = () => createSelector(selectGlobal, globalState => globalState.isAuthenticated);
 const makeSelectUser = () => createSelector(selectGlobal, globalState => globalState.user);
@@ -38,6 +41,10 @@ const makeSelectUpdateConfigurationError = () => createSelector(selectGlobal, gl
 
 export {
     selectGlobal,
+
+    makeSelectGC2Configuration,
+    makeSelectGC2ConfigurationLoading,
+
     makeSelectIsAuthenticating,
     makeSelectIsAuthenticated,
     makeSelectUser,

@@ -12,7 +12,7 @@ import { SIGN_IN_REQUEST, SIGN_IN_SUCCESS, SIGN_IN_FAILURE, SIGN_OUT,
     CREATE_UPDATE_CONFIGURATION_RESET, CREATE_CONFIGURATION_REQUEST, CREATE_CONFIGURATION_SUCCESS, CREATE_CONFIGURATION_FAILURE,
     UPDATE_CONFIGURATION_REQUEST, UPDATE_CONFIGURATION_SUCCESS, UPDATE_CONFIGURATION_FAILURE,
     DELETE_CONFIGURATION_REQUEST, DELETE_CONFIGURATION_SUCCESS, DELETE_CONFIGURATION_FAILURE,
-    CREATE_UPDATE_USER_RESET} from 'containers/App/constants';
+    CREATE_UPDATE_USER_RESET, GET_GC2_CONFIGURATION_REQUEST, GET_GC2_CONFIGURATION_SUCCESS} from 'containers/App/constants';
 
 const cookies = new Cookies();
 
@@ -53,6 +53,14 @@ export function updateUserPasswordSuccess() { return { type: UPDATE_USER_PASSWOR
 export function deleteUserRequest(payload) { return { type: DELETE_USER_REQUEST, payload }; }
 export function deleteUserSuccess() { return { type: DELETE_USER_SUCCESS }; }
 export function deleteUserFailure() { return { type: DELETE_USER_FAILURE }; }
+
+export function getGC2ConfigurationRequest() {
+    return { type: GET_GC2_CONFIGURATION_REQUEST };
+}
+
+export function getGC2ConfigurationSuccess(payload) {
+    return { type: GET_GC2_CONFIGURATION_SUCCESS, payload };
+}
 
 export function checkAuthorizationRequest() {
     if (cookies.get('PHPSESSID')) {

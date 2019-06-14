@@ -18,12 +18,9 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExploreIcon from '@material-ui/icons/Explore';
 
-import config from 'config';
-
-import {makeSelectUser, makeSelectSchemas} from 'containers/App/selectors';
+import {makeSelectUser, makeSelectSchemas,makeSelectGC2Configuration} from 'containers/App/selectors';
 import {getSchemasRequest} from 'containers/App/actions';
 
-import StyledButtonLink from 'components/StyledButtonLink';
 import StyledExternalLink from 'components/StyledExternalLink';
 
 export class SchemasPanel extends React.PureComponent {
@@ -40,11 +37,9 @@ export class SchemasPanel extends React.PureComponent {
     }
 
     render() {
-        let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
-
         let schemasFilter = false;
         let schemasComponents = [];
-        if (this.props.schemas) {
+        if (this.props.schemas && this.props.gc2Configuration) {
             schemasFilter = (<Grid container spacing={8} alignItems="flex-end">
                 <Grid item>
                     <SearchIcon/>
@@ -82,7 +77,7 @@ export class SchemasPanel extends React.PureComponent {
                                     </Typography>
                                 </Grid>
                                 <Grid item style={{flex: `0 0 50%`, textAlign: `right`}}>
-                                    <StyledExternalLink href={`${window.gc2Options.vidiUrl}/app/${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
+                                    <StyledExternalLink href={`${this.props.gc2Configuration.gc2Options.vidiUrl}/app/${databaseName}/${item.schema}`} target="_blank" style={{marginRight: `10px`}}>
                                         <Button color="primary" variant="contained" size="small">
                                             <LaunchIcon/> Vidi
                                         </Button>
@@ -128,6 +123,7 @@ export class SchemasPanel extends React.PureComponent {
 }
 
 const mapStateToProps = createStructuredSelector({
+    gc2Configuration: makeSelectGC2Configuration(),
     user: makeSelectUser(),
     schemas: makeSelectSchemas()
 });

@@ -1,5 +1,6 @@
 {
     "welcomeDescription": "Integrate, manage, visualise, and analyze all your enterprise geospatial data.",
+    "loadingConfiguration": "Loading configuration",
 
     "containers.NotFoundPage.notFound": "Page was not found",
     "containers.NotFoundPage.pleaseCheckTheAddressOrContactTheSupport": "Please check the address or contact the support team",
