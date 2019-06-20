@@ -1,11 +1,15 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import AceEditor from 'react-ace';
+import brace from "brace";
 
 import { createStructuredSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
-import JSONInput from 'react-json-editor-ajrm';
-import locale from 'react-json-editor-ajrm/locale/en';
+import jsonlint from 'jsonlint-mod';
+
+import "brace/mode/json";
+import "brace/theme/monokai";
 
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -56,6 +60,7 @@ const initialState = {
     body: placeholder,
     bodyIsValid: true,
     published: true,
+    bodyError: false,
 };
 
 class ConfigurationPage extends React.Component {
@@ -98,16 +103,27 @@ class ConfigurationPage extends React.Component {
 
         return null;
     }
+    
+    handleFormat() {
+        if (this.state.bodyIsValid) {
+            this.setState({body: JSON.stringify(JSON.parse(this.state.body), null, 4)});
+        }
+    }
 
     handleJSONUpdate(value) {
-        if (value.jsObject) {
-            this.setState({
-                body: value.jsObject,
-                bodyIsValid: true
-            });
-        } else {
-            this.setState({bodyIsValid: false});
+        let parsedValue = false;
+        let bodyError = false;
+        try {
+            parsedValue = jsonlint.parse(value);
+        } catch(e) {
+            bodyError = e;
         }
+
+        this.setState({
+            body: value,
+            bodyError,
+            bodyIsValid: (parsedValue === false ? false : true)
+        });
     }
 
     handleFormSubmit() {
@@ -149,7 +165,17 @@ class ConfigurationPage extends React.Component {
             dataIsValid = true;
         }
 
-        let localPlaceholder = (this.state.body ? (typeof this.state.body === `string` ? JSON.parse(this.state.body) : this.state.body) : placeholder);
+        let localPlaceholder = ``;
+        if (this.state.body) {
+            if (typeof this.state.body === `string`) {
+                localPlaceholder = this.state.body;
+            } else {
+                localPlaceholder = JSON.stringify(this.state.body, null, 4);
+            }
+        } else {
+            localPlaceholder = JSON.stringify(placeholder, null, 4);
+        }
+        
         let formPanel = (<Grid item xs>
             <Grid container>
                 <Grid item>
@@ -205,16 +231,42 @@ class ConfigurationPage extends React.Component {
 
             <Grid container direction="row" alignItems="center" justify="center">
                 <Grid item xs style={{paddingTop: `20px`, paddingBottom: `20px`}}>
-                    <JSONInput
-                        id="unique_id"
-                        placeholder={localPlaceholder}
-                        locale={locale}
-                        theme="dark_vscode_tribute"
+                    <AceEditor
+                        mode="json"
+                        theme="monokai"
+                        onChange={this.handleJSONUpdate.bind(this)}
+                        name="unique_id"
+                        value={localPlaceholder}
                         width="100%"
-                        height="550px"
-                        onChange={this.handleJSONUpdate.bind(this)}/>
+                        showPrintMargin={false}
+                        editorProps={{$blockScrolling: true}}/>
                 </Grid>
             </Grid>
+            <Grid>
+                <Grid item xs>
+                    <div style={{display: `flex`}}>
+                        <div style={{flexGrow: `1`}}>
+                            {this.state.bodyIsValid ? (<Typography variant="body1">
+                                <FormattedMessage id="Configuration is valid"/>
+                            </Typography>) : (<span>
+                                <Typography variant="body1" color="secondary">
+                                    <FormattedMessage id="Configuration is invalid"/>
+                                </Typography>
+                            </span>)}
+                        </div>
+                        <div>
+                            <Button variant="contained" size="small" disabled={!this.state.bodyIsValid} color="primary" onClick={this.handleFormat.bind(this)}>
+                                <FormattedMessage id="Format JSON"/>
+                            </Button>
+                        </div>
+                    </div>
+                </Grid>
+            </Grid>
+            {this.state.bodyError ? (<div>
+                <div>
+                    <pre style={{fontSize: `12px`}}>{`` + this.state.bodyError}</pre>
+                </div>
+            </div>) : false}
             <Grid container direction="row" alignItems="center" justify="center">
                 <Grid item xs>
                     <FormControlLabel
