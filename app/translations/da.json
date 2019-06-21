@@ -1,4 +1,7 @@
 {
+    "Format JSON": "# Format JSON",
+    "Configuration is valid": "# Configuration is valid",
+    "Configuration is invalid": "# Configuration is invalid",
     "welcomeDescription": "Data. Visualization. Insight.",
     "loadingConfiguration": "Henter konfiguration",
 
