@@ -1,7 +1,7 @@
 {
-    "Format JSON": "# Format JSON",
-    "Configuration is valid": "# Configuration is valid",
-    "Configuration is invalid": "# Configuration is invalid",
+    "Format JSON": "Formater JSON",
+    "Configuration is valid": "Konfiguration er uden fejl",
+    "Configuration is invalid": "Konfiguration har fejl",
     "welcomeDescription": "Data. Visualization. Insight.",
     "loadingConfiguration": "Henter konfiguration",
 
@@ -49,7 +49,7 @@
     "Create subuser": "Ny sub-bruger",
     "Retype new password": "Gentag ny adgangskode",
     "Current password": "Nuværende adgangskode",
-    "New password": "# Ny adgangskode",
+    "New password": "Ny adgangskode",
     "Sign in": "Log ind",
     "Sign out": "Log ud",
     "Name": "Navn",
