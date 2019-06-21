@@ -2,7 +2,7 @@
     "Format JSON": "Format JSON",
     "Configuration is valid": "Configuration is valid",
     "Configuration is invalid": "Configuration is invalid",
-    "welcomeDescription": "Integrate, manage, visualise, and analyze all your enterprise geospatial data.",
+    "welcomeDescription": "Data. Visualization. Insight.",
     "loadingConfiguration": "Loading configuration",
 
     "containers.NotFoundPage.notFound": "Page was not found",
@@ -34,7 +34,7 @@
     "Add configuration": "Add configuration",
     "Update configuration": "Update configuration",
     "Help": "Help",
-    "Geocloud Dashboard": "Geocloud Dashboard",
+    "Geocloud Dashboard": "Dashboard",
     "Create schema": "Create schema",
     "Username": "Username",
     "Username or email": "Username or email",
