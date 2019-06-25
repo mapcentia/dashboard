@@ -117,16 +117,20 @@ class ConfigurationPage extends React.Component {
     }
 
     handleFormSubmit() {
-        if (this.state.key) {
-            this.props.dispatch(updateConfigurationRequest({
-                userId: this.props.user.screenName,
-                data: this.state
-            }));
-        } else{
-            this.props.dispatch(createConfigurationRequest({
-                userId: this.props.user.screenName,
-                data: this.state
-            }));
+        let data = JSON.parse(JSON.stringify(this.state));
+        if (this.state.bodyIsValid) {
+            data.body = (typeof data.body === `string` ? JSON.parse(data.body) : data.body);
+            if (this.state.key) {
+                this.props.dispatch(updateConfigurationRequest({
+                    userId: this.props.user.screenName,
+                    data
+                }));
+            } else{
+                this.props.dispatch(createConfigurationRequest({
+                    userId: this.props.user.screenName,
+                    data
+                }));
+            }
         }
     }
 
