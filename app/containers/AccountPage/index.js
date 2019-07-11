@@ -92,7 +92,7 @@ export class AccountPage extends React.PureComponent {
                         <TableBody>
                             <TableRow>
                                 <TableCell><FormattedMessage id="Name"/></TableCell>
-                                <TableCell>{this.props.user.screenName}</TableCell>
+                                <TableCell>{this.props.user.subuser || this.props.user.screenName}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell><FormattedMessage id="Email address"/></TableCell>
