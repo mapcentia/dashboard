@@ -1,11 +1,5 @@
-/*
- * "vidiUrl" has to point to the actual Vidi installation and expects
- * database and other parameters to go right after the vidiUrl, like
- * http://example.com:8080/app/DATABASE/SCHEMA
- */
 const config = {
-    apiUrl: `/api/v2/`,
-    vidiUrl: `VIDI_URL_CONFIGURATION`
+    apiUrl: `/api/v2/`
 };
 
 export default config;
