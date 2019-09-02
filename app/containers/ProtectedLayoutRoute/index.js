@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { Redirect } from 'react-router';
-import { Route } from 'react-router-dom';
-import { withRouter } from "react-router";
-import { FormattedMessage } from 'react-intl';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {createStructuredSelector} from 'reselect';
+import {Redirect} from 'react-router';
+import {Route} from 'react-router-dom';
+import {withRouter} from "react-router";
+import {FormattedMessage} from 'react-intl';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,13 +15,15 @@ import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import HelpIcon from '@material-ui/icons/Help';
 
-import { signOut } from 'containers/App/actions';
+import {signOut} from 'containers/App/actions';
 
 import StyledButtonLink from 'components/StyledButtonLink';
+import StyledExternalLink from 'components/StyledExternalLink';
 import LoadingOverlay from 'components/LoadingOverlay';
 import AppLoadingOverlay from 'components/AppLoadingOverlay';
-import { makeSelectIsAuthenticating, makeSelectIsAuthenticated, makeSelectUser } from 'containers/App/selectors';
+import {makeSelectIsAuthenticating, makeSelectIsAuthenticated, makeSelectUser} from 'containers/App/selectors';
 
 import MainContentWrapper from 'components/MainContentWrapper';
 
@@ -32,19 +34,25 @@ class ProtectedLayout extends React.Component {
 
     render() {
         let prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
-        const { children } = this.props;
+        const {children} = this.props;
         if (this.props.isAuthenticating === false) {
             if (this.props.isAuthenticated) {
                 let userButton = (<StyledButtonLink to={prefix + "account"}>
                     <Button color="inherit">
-                        <AccountCircleIcon style={{ marginRight: `6px`}}/> {this.props.user.subuser || this.props.user.screenName}
+                        <AccountCircleIcon style={{marginRight: `6px`}}/> {this.props.user.subuser || this.props.user.screenName}
                     </Button>
                 </StyledButtonLink>);
+
+                let helpButton = (<StyledExternalLink href={"https://mapcentia.screenstepslive.com/s"} target="_blank">
+                    <Button color="inherit">
+                        <HelpIcon style={{marginRight: `6px`}}/>
+                    </Button>
+                </StyledExternalLink>);
 
                 if (this.props.user.passwordExpired) {
                     userButton = (<Badge color="secondary" variant="dot">
                         {userButton}
-                  </Badge>);
+                    </Badge>);
                 }
 
                 return (<div>
@@ -56,7 +64,7 @@ class ProtectedLayout extends React.Component {
                                     <Grid item>
                                         <StyledButtonLink to={prefix}>
                                             <Typography variant="h6" color="inherit">
-                                                <FormattedMessage id="Geocloud Dashboard" />
+                                                <FormattedMessage id="Geocloud Dashboard"/>
                                             </Typography>
                                         </StyledButtonLink>
                                     </Grid>
@@ -64,9 +72,12 @@ class ProtectedLayout extends React.Component {
                                         <div style={{display: `inline-block`, paddingRight: `20px`}}>
                                             {userButton}
                                         </div>
+                                        <div style={{display: `inline-block`, paddingRight: `20px`}}>
+                                            {helpButton}
+                                        </div>
                                         <div style={{display: `inline-block`}}>
                                             <Button color="inherit" onClick={this.props.onSignOut}>
-                                                <FormattedMessage id="Sign out" />
+                                                <FormattedMessage id="Sign out"/>
                                             </Button>
                                         </div>
                                     </Grid>
@@ -97,12 +108,12 @@ class ProtectedLayoutRoute extends React.Component {
     }
 
     render() {
-        const { component: Component, ...rest } = this.props;
+        const {component: Component, ...rest} = this.props;
         return (<Route {...rest} render={matchProps => (
             <ProtectedLayout {...this.props}>
                 <Component {...matchProps} />
             </ProtectedLayout>
-        )} />);
+        )}/>);
     }
 }
 
