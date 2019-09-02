@@ -70,7 +70,7 @@
         "jsonlint": "^1.6.3",
         "jsonlint-mod": "^1.7.4",
         "loadable-components": "2.2.3",
-        "lodash": "4.17.11",
+        "lodash": "^4.17.15",
         "minimist": "1.2.0",
         "prop-types": "15.6.2",
         "react": "^16.6.0",
