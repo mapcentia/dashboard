@@ -69,8 +69,10 @@ class SigninForm extends React.Component {
         return (<form onSubmit={(e) => {
             if (step === STEP_NAME) {
                 this.props.onGetDatabases(this.state.user)
-                e.preventDefault();
             }
+
+            e.preventDefault();
+            e.stopPropagation();
         }}>
             <div style={{ paddingBottom: `20px`}}>
                 <FormControl margin="normal" fullWidth>
