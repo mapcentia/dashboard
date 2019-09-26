@@ -39,7 +39,7 @@ class ProtectedLayout extends React.Component {
             if (this.props.isAuthenticated) {
                 let userButton = (<StyledButtonLink to={prefix + "account"}>
                     <Button color="inherit">
-                        <AccountCircleIcon style={{marginRight: `6px`}}/> {this.props.user.subuser || this.props.user.screenName}
+                        <AccountCircleIcon style={{marginRight: `6px`}}/> {this.props.user.screenName}
                     </Button>
                 </StyledButtonLink>);
 

@@ -213,7 +213,7 @@ export class SubuserPage extends React.PureComponent {
                         <TextField
                             fullWidth
                             label={this.props.intl.formatMessage({id: `Name`})}
-                            value={this.state.subuser}
+                            value={this.state.screenName}
                             helperText={this.props.intl.formatMessage({id: "Name will be used as identifier"})}
                             onChange={() => { this.setState({ screenName: event.target.value}) }}/>
                     </TextFieldWrapper>
