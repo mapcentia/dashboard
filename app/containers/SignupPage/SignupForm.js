@@ -30,7 +30,7 @@ class SignupForm extends React.Component {
     };
 
     render() {
-        let nameIsValid = (this.state.name.length > 3);
+        let nameIsValid = (this.state.name.length > 1);
         let emailIsValid = validator.validate(this.state.email);
         let password1IsValid = (passwordIsStrongEnough(this.state.password1));
         let password2IsValid = (passwordIsStrongEnough(this.state.password2));
