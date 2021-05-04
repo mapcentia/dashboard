@@ -88,7 +88,6 @@ export function getDatabasesFailure(payload) { return { type: GET_DATABASES_FAIL
 
 // Sign in
 export function signInSuccess(payload) {
-    cookies.set('PHPSESSID', payload.session_id, {path: `/`});
     return { type: SIGN_IN_SUCCESS, payload: normalizeUser(payload) };
 }
 
