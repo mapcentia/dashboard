@@ -160,7 +160,7 @@ class ConfigurationPage extends React.Component {
         }
 
         let localPlaceholder = ``;
-        if (this.state.body) {
+        if (typeof this.state.body !== "undefined") {
             if (typeof this.state.body === `string`) {
                 localPlaceholder = this.state.body;
             } else {
