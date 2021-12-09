@@ -14,6 +14,7 @@ const makeSelectSigningInError = () => createSelector(selectGlobal, globalState 
 
 const makeSelectAvailableDatabasesList = () => createSelector(selectGlobal, globalState => globalState.availableDatabasesList);
 const makeSelectAvailableDatabasesUserName = () => createSelector(selectGlobal, globalState => globalState.availableDatabasesUserName);
+const makeDatabaseError = () => createSelector(selectGlobal, globalState => globalState.databaseError);
 
 const makeSelectCreateUser = () => createSelector(selectGlobal, globalState => globalState.createUser);
 const makeSelectCreateUserSuccess = () => createSelector(selectGlobal, globalState => globalState.createUserSuccess);
@@ -50,6 +51,7 @@ export {
   makeSelectUser,
   makeSelectSigningIn,
   makeSelectSigningInError,
+  makeDatabaseError,
   makeSelectCreateUser,
 
   makeSelectAvailableDatabasesList,

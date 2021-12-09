@@ -27,6 +27,8 @@ const initialState = fromJS({
     signingInSuccess: false,
     signingInError: false,
 
+    databaseError: false,
+
     createUser: false,
     createUserSuccess: false,
     createUserSuccessUserName: false,
@@ -130,8 +132,12 @@ function appReducer(state = initialState, action) {
             return Object.assign({}, state, {
                 availableDatabasesList: action.payload.databases,
                 availableDatabasesUserName: action.payload.userName,
+                databaseError: false,
             });
-
+        case GET_DATABASES_FAILURE:
+            return Object.assign({}, state, {
+                databaseError: true,
+            });
         case CREATE_USER_RESET:
             return Object.assign({}, state, {
                 isRequesting: false,

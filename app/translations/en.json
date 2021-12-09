@@ -74,6 +74,7 @@
     "Passwords do not match": "Passwords do not match",
     "User was created, you can now Sign in": "User was created, you can now Sign in",
     "Invalid username or password": "Invalid username or password",
+    "Database error": "Database error",
     "Account": "Account",
     "General information": "General information",
     "Please update your password, the old one has expired": "Please update your password, the old one has expired",

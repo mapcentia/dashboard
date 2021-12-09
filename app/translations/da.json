@@ -74,6 +74,7 @@
     "Passwords do not match": "Adgangskoderne stemmer ikke overens",
     "User was created, you can now Sign in": "Bruger blev oprettet og du kan nu logge ind",
     "Invalid username or password": "Ugyldig brugernavn eller adgangskode",
+    "Database error": "Databasefejl",
     "Account": "Konto",
     "General information": "Generelle oplysninger",
     "Please update your password, the old one has expired": "Opdater venligst din adgangskode, den gamle er udløbet",

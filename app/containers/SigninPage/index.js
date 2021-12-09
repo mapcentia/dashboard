@@ -13,6 +13,7 @@ import { signInRequest, getDatabasesRequest, getDatabasesReset } from 'container
 import SigninForm from './SigninForm';
 import PublicFormsWrapper from 'components/PublicFormsWrapper';
 import StyledLink from 'components/StyledLink';
+import { makeDatabaseError } from '../App/selectors';
 
 const ErrorWrapper = styled.div`
     padding-top: 10px;
@@ -39,7 +40,14 @@ class Signin extends React.Component {
                         </Typography>
                     </ErrorWrapper>
                 ) : false}
-                <Divider style={{ marginTop: `20px`, marginBottom: `20px` }}/>
+              {this.props.databaseError ? (
+                <ErrorWrapper>
+                  <Typography variant="body1" gutterBottom color="error">
+                    <FormattedMessage id="Database error" />
+                  </Typography>
+                </ErrorWrapper>
+              ) : false}
+              <Divider style={{ marginTop: `20px`, marginBottom: `20px` }}/>
                 <StyledLink to={prefix + "sign-up"}>
                     <Button type="submit" fullWidth variant="contained" color="secondary">
                         <FormattedMessage id="Register" />
@@ -53,6 +61,7 @@ class Signin extends React.Component {
 const mapStateToProps = createStructuredSelector({
     signingIn: makeSelectSigningIn(),
     signingInError: makeSelectSigningInError(),
+    databaseError: makeDatabaseError(),
 });
 
 export default connect(mapStateToProps)(Signin);
