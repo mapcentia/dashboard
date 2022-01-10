@@ -40,7 +40,7 @@ const createUserCall = (action) => {
         return axios.post(`${config.apiUrl}user`, action.payload.data, {
             withCredentials: true,
             validateStatus: (status) => {
-                return status >= 200 && status <= 400;
+                return status >= 200 && status <= 500;
             }
         });
     }
