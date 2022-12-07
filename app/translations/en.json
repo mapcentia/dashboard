@@ -91,5 +91,6 @@
     
     "containers.SignupPage.signIn": "Sign in",
 
-    "checkingAuthorizationStatus": "Checking authorization status"
+    "checkingAuthorizationStatus": "Checking authorization status",
+    "Database creation is disabled": "Database creation is disabled"
 }

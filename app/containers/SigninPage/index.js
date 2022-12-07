@@ -13,7 +13,7 @@ import { signInRequest, getDatabasesRequest, getDatabasesReset } from 'container
 import SigninForm from './SigninForm';
 import PublicFormsWrapper from 'components/PublicFormsWrapper';
 import StyledLink from 'components/StyledLink';
-import { makeDatabaseError } from '../App/selectors';
+import { makeDatabaseError, makeSelectGC2Configuration } from '../App/selectors';
 
 const ErrorWrapper = styled.div`
     padding-top: 10px;
@@ -25,11 +25,12 @@ class Signin extends React.Component {
     }
 
     render() {
-        let prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+        const prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
+        const logo = this.props.gc2Configuration.gc2Options.loginLogo ? this.props.gc2Configuration.gc2Options.loginLogo : prefix + "assets/img/MapCentia_500.png";
         return (
-            <PublicFormsWrapper>
+            <PublicFormsWrapper logo={logo}>
                 <SigninForm
-                    disabled={this.props.signingIn ? true : false}
+                    disabled={!!this.props.signingIn}
                     onGetDatabases={(userName) => { this.props.dispatch(getDatabasesRequest(userName))}}
                     onReset={() => { this.props.dispatch(getDatabasesReset())}}
                     onSubmit={(data) => { this.props.dispatch(signInRequest(data)); }}/>
@@ -47,12 +48,17 @@ class Signin extends React.Component {
                   </Typography>
                 </ErrorWrapper>
               ) : false}
-              <Divider style={{ marginTop: `20px`, marginBottom: `20px` }}/>
-                <StyledLink to={prefix + "sign-up"}>
-                    <Button type="submit" fullWidth variant="contained" color="secondary">
-                        <FormattedMessage id="Register" />
-                    </Button>
-                </StyledLink>
+
+                {!this.props.gc2Configuration.gc2Options.disableDatabaseCreation ? (
+                  <div>
+                      <Divider style={{ marginTop: `20px`, marginBottom: `20px` }} />
+                      <StyledLink to={prefix + "sign-up"}>
+                        <Button type="submit" fullWidth variant="contained" color="secondary">
+                            <FormattedMessage id="Register" />
+                        </Button>
+                    </StyledLink>
+                  </div>) : ""
+                }
             </PublicFormsWrapper>
         );
     }
@@ -62,6 +68,7 @@ const mapStateToProps = createStructuredSelector({
     signingIn: makeSelectSigningIn(),
     signingInError: makeSelectSigningInError(),
     databaseError: makeDatabaseError(),
+    gc2Configuration: makeSelectGC2Configuration(),
 });
 
 export default connect(mapStateToProps)(Signin);
