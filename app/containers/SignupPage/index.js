@@ -35,7 +35,7 @@ class SignupPage extends React.Component {
 
     render() {
         const appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
-        const logo = this.props.gc2Configuration.gc2Options.loginLogo ? this.props.gc2Configuration.gc2Options.loginLogo : appBaseURL + "assets/img/MapCentia_500.png";
+        const logo = this.props?.gc2Configuration?.gc2Options.loginLogo ? this.props.gc2Configuration.gc2Options.loginLogo : appBaseURL + "assets/img/MapCentia_500.png";
         return (
             <PublicFormsWrapper logo={logo}>
                 {this.props.success && this.props.username ? (
@@ -48,7 +48,7 @@ class SignupPage extends React.Component {
                         </Typography>
                     </SuccessWrapper>
                 ) : (
-                  !this.props.gc2Configuration.gc2Options.disableDatabaseCreation ? (
+                  !this.props.gc2Configuration?.gc2Options?.disableDatabaseCreation ? (
                     <SignupForm disabled={this.props.loading ? true : false} onSubmit={data => {this.props.dispatch(createUserRequest(data))}}/>
                       ) : <div><FormattedMessage id="Database creation is disabled" /></div>
 

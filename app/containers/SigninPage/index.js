@@ -26,7 +26,7 @@ class Signin extends React.Component {
 
     render() {
         const prefix = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
-        const logo = this.props.gc2Configuration.gc2Options.loginLogo ? this.props.gc2Configuration.gc2Options.loginLogo : prefix + "assets/img/MapCentia_500.png";
+        const logo = this.props.gc2Configuration?.gc2Options?.loginLogo ? this.props.gc2Configuration.gc2Options.loginLogo : prefix + "assets/img/MapCentia_500.png";
         return (
             <PublicFormsWrapper logo={logo}>
                 <SigninForm
@@ -49,7 +49,7 @@ class Signin extends React.Component {
                 </ErrorWrapper>
               ) : false}
 
-                {!this.props.gc2Configuration.gc2Options.disableDatabaseCreation ? (
+                {!this.props.gc2Configuration?.gc2Options?.disableDatabaseCreation ? (
                   <div>
                       <Divider style={{ marginTop: `20px`, marginBottom: `20px` }} />
                       <StyledLink to={prefix + "sign-up"}>
