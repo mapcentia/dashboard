@@ -92,5 +92,6 @@
     "containers.SignupPage.signIn": "Log ind",
 
     "checkingAuthorizationStatus": "Kontrollerer godkendelsesstatus",
-    "Database creation is disabled": "Database oprettelse er slået fra"
+    "Database creation is disabled": "Database oprettelse er slået fra",
+    "Close": "Luk"
 }

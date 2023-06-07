@@ -24,6 +24,7 @@ import StyledExternalLink from 'components/StyledExternalLink';
 import LoadingOverlay from 'components/LoadingOverlay';
 import AppLoadingOverlay from 'components/AppLoadingOverlay';
 import {makeSelectIsAuthenticating, makeSelectIsAuthenticated, makeSelectUser} from 'containers/App/selectors';
+import HelpModal from 'components/HelpModal';
 
 import MainContentWrapper from 'components/MainContentWrapper';
 
@@ -43,11 +44,9 @@ class ProtectedLayout extends React.Component {
                     </Button>
                 </StyledButtonLink>);
 
-                let helpButton = (<StyledExternalLink href={"https://mapcentia.screenstepslive.com/s"} target="_blank">
-                    <Button color="inherit">
-                        <HelpIcon style={{marginRight: `6px`}}/>
-                    </Button>
-                </StyledExternalLink>);
+                let helpButton = (
+                    <HelpModal/>
+                );
 
                 if (this.props.user.passwordExpired) {
                     userButton = (<Badge color="secondary" variant="dot">
