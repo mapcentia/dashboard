@@ -1,9 +1,10 @@
 import React from 'react';
-import {FormattedMessage, injectIntl} from 'react-intl';
-import {connect} from 'react-redux';
-import {compose} from 'redux';
-import {CopyToClipboard} from 'react-copy-to-clipboard';
-import {createStructuredSelector} from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { injectIntl } from 'react-intl';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { createStructuredSelector } from 'reselect';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -19,7 +20,9 @@ import LinkIcon from '@material-ui/icons/Link';
 
 import StyledButtonLink from 'components/StyledButtonLink';
 import StyledExternalLink from 'components/StyledExternalLink';
-import {makeSelectGC2Configuration, makeSelectUser} from 'containers/App/selectors';
+
+import config from 'config';
+import { makeSelectUser, makeSelectGC2Configuration } from 'containers/App/selectors';
 
 class PublishedConfigurationsPage extends React.Component {
     constructor(props) {
@@ -29,8 +32,7 @@ class PublishedConfigurationsPage extends React.Component {
     render() {
         let appBaseURL = (process.env.WEBPACK_PUBLIC_PATH ? process.env.WEBPACK_PUBLIC_PATH : `/`);
 
-        const port = ['80', '443'].includes(location.port) ? '' : `:${location.port}`;
-        let url = `${location.protocol}//${location.hostname}${port}/api/v2/configuration/${this.props.ownerScreenName}/${this.props.data.key}.json`;
+        let url = config.apiUrl + `configuration/${this.props.ownerScreenName}/${this.props.data.key}.json`;
         let parsedData = JSON.parse(this.props.data.value);
 
         let databaseName = ``;
@@ -41,9 +43,8 @@ class PublishedConfigurationsPage extends React.Component {
         }
 
         return (<ExpansionPanel defaultExpanded={this.props.expanded ? true : false}>
-            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                <Typography><LinkIcon/> {parsedData.name} {parsedData.published ? false : (<Tooltip placement="top"
-                                                                                                    title={this.props.intl.formatMessage({id: `Configuration is not published`})}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                <Typography><LinkIcon/> {parsedData.name} {parsedData.published ? false : (<Tooltip placement="top" title={this.props.intl.formatMessage({id: `Configuration is not published`})}>
                     <LockIcon/>
                 </Tooltip>)}</Typography>
             </ExpansionPanelSummary>
@@ -59,9 +60,7 @@ class PublishedConfigurationsPage extends React.Component {
                             style={{marginTop: `0px`}}/>
                     </div>
                     <div style={{textAlign: `right`}}>
-                        {this.props.gc2Configuration ? (<StyledExternalLink
-                            href={`${this.props.gc2Configuration.gc2Options.vidiUrl}/app/${databaseName}/?config=${url}`}
-                            target="_blank" style={{marginRight: `10px`}}>
+                        {this.props.gc2Configuration ? (<StyledExternalLink href={`${this.props.gc2Configuration.gc2Options.vidiUrl}/app/${databaseName}/?config=${url}`} target="_blank" style={{marginRight: `10px`}}>
                             <Button color="primary" variant="contained" size="small">
                                 <LaunchIcon/> Vidi
                             </Button>
@@ -73,20 +72,15 @@ class PublishedConfigurationsPage extends React.Component {
                             </Button>
                         </CopyToClipboard>
 
-                        {this.props.readOnly === false ? (
-                            <StyledButtonLink to={appBaseURL + `configuration/edit/${this.props.data.key}`}
-                                              style={{marginRight: `10px`}}>
-                                <Button color="primary" variant="contained" size="small">
-                                    <FormattedMessage id="Edit"/>
-                                </Button>
-                            </StyledButtonLink>) : false}
+                        {this.props.readOnly === false ? (<StyledButtonLink to={appBaseURL + `configuration/edit/${this.props.data.key}`} style={{marginRight: `10px`}}>
+                            <Button color="primary" variant="contained" size="small">
+                                <FormattedMessage id="Edit"/>
+                            </Button>
+                        </StyledButtonLink>) : false}
 
-                        {this.props.onDelete ? (
-                            <Button color="secondary" variant="contained" size="small" onClick={() => {
-                                this.props.onDelete(this.props.data.key, parsedData.name)
-                            }}>
-                                <FormattedMessage id="Delete"/>
-                            </Button>) : false}
+                        {this.props.onDelete ? (<Button color="secondary" variant="contained" size="small" onClick={() => { this.props.onDelete(this.props.data.key, parsedData.name)}}>
+                            <FormattedMessage id="Delete"/>
+                        </Button>) : false}
                     </div>
                 </div>
             </ExpansionPanelDetails>
