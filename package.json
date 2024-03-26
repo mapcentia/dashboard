@@ -58,7 +58,7 @@
         "dotenv": "^7.0.0",
         "dotenv-webpack": "^1.7.0",
         "email-validator": "^2.0.4",
-        "express": "4.16.4",
+        "express": "4.19.2",
         "history": "4.7.2",
         "hoist-non-react-statics": "3.0.1",
         "immutable": "3.8.2",
